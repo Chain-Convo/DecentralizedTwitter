@@ -1,17 +1,46 @@
 import React from "react";
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
+// import getWeb3 from "./scripts/getWeb3"
+import Web3 from "web3";
+// import TokenContract from "./contracts/tokenContractInfo.json";
+import tokenContractInstance from "./scripts/tokenContractInstance"
+import { publishTweet } from "./scripts/tokenContractInteract";
 
 function App() {
+
+  //  Connecting to Metamask on load of webpage..
+  React.useEffect(() => {
+    async function connectMetamask() {
+    const web3 = new Web3(window.ethereum);
+    try {
+      // Request account access if needed
+      await window.ethereum.enable();
+      // Acccounts now exposed
+      const accounts = await web3.eth.getAccounts();
+      //  Setting the from account for the token contract to perform the 'Token' Contract transactions..
+      tokenContractInstance.options.from = accounts[0]
+    } catch (error) {
+      // dispatch(loginMetaMaskFail());
+      console.log(error)
+    }
+  }
+  connectMetamask()
+  })
+
+  // React States to set the tweet msg, category, token Id, address
   const [tweetMsg, setTweetMsg] = React.useState("");
   const [tweetMsgCategory, setTweetMsgCategory] = React.useState("");
+  const [tokenId, setTokenId] = React.useState("")
 
+  // Set Tweet Message
   const onChangeTweetMsg = (event) => {
     if (event.target.value != null) {
     setTweetMsg(event.target.value);
     }
   };
 
+  // Set Tweet Message Category
   const onSelectCategory = (event) => {
     if (event.target.value != null) {
       console.log(event.target.value);
@@ -19,12 +48,23 @@ function App() {
     }
   };
 
-  const onPublishClick = (event) => {
+  const onPublishClick = async (event) => {
     event.preventDefault();
+    console.log("ffef: " , tweetMsgCategory)
+    // console.log(tokenContractInstance.options.from)
+
     if (tweetMsg !== "" && tweetMsgCategory !== "" && tweetMsgCategory !== "Choose...") {
-      alert("Tweet message entered: " + tweetMsg + " with category: " + tweetMsgCategory);
+      await publishTweet(tweetMsg.toString(), tweetMsgCategory.toString()).then(res => {
+        // console.log("app.js function printing.....")
+        // console.log(res)
+        setTokenId(res.toString());
+      });
+
+      // console.log(id)
+      // alert("Tweet message entered: " + tweetMsg + " with category: " + tweetMsgCategory);
     }
   };
+  // console.log("txn. done.. Token Id: " , tokenId)
   return (
     <div className="App">
 
