@@ -4,39 +4,52 @@ import "./App.css";
 // import getWeb3 from "./scripts/getWeb3"
 import Web3 from "web3";
 // import TokenContract from "./contracts/tokenContractInfo.json";
-import tokenContractInstance from "./scripts/tokenContractInstance"
-import { publishTweet } from "./scripts/tokenContractInteract";
+import tokenContractInstance from "./scripts/tokenContractInstance";
+import { publishTweet, getAllTweets } from "./scripts/tokenContractInteract";
 
 function App() {
-
+  const [allTweets, setAllTweets] = React.useState([]);
   //  Connecting to Metamask on load of webpage..
   React.useEffect(() => {
     async function connectMetamask() {
-    const web3 = new Web3(window.ethereum);
-    try {
-      // Request account access if needed
-      await window.ethereum.enable();
-      // Acccounts now exposed
-      const accounts = await web3.eth.getAccounts();
-      //  Setting the from account for the token contract to perform the 'Token' Contract transactions..
-      tokenContractInstance.options.from = accounts[0]
-    } catch (error) {
-      // dispatch(loginMetaMaskFail());
-      console.log(error)
+      const web3 = new Web3(window.ethereum);
+      try {
+        // Request account access if needed
+        await window.ethereum.enable();
+        // Acccounts now exposed
+        const accounts = await web3.eth.getAccounts();
+        //  Setting the from account for the token contract to perform the 'Token' Contract transactions..
+        tokenContractInstance.options.from = accounts[0];
+      } catch (error) {
+        // dispatch(loginMetaMaskFail());
+        console.log(error);
+      }
     }
-  }
-  connectMetamask()
-  })
+    connectMetamask();
+  });
 
+  React.useEffect(() => {
+    getAllTweets().then((result) => {
+      console.log("inside app.js file");
+      console.log(result[11]);
+      setAllTweets(result.reverse());
+      // console.log(allTweets.length);
+    });
+  }, []);
+
+  // if (allTweets.length > 0) {
+
+  //   console.log("printing: ", allTweets[11].id);
+  // }
   // React States to set the tweet msg, category, token Id, address
   const [tweetMsg, setTweetMsg] = React.useState("");
   const [tweetMsgCategory, setTweetMsgCategory] = React.useState("");
-  const [tokenId, setTokenId] = React.useState("")
+  const [tokenId, setTokenId] = React.useState("");
 
   // Set Tweet Message
   const onChangeTweetMsg = (event) => {
     if (event.target.value != null) {
-    setTweetMsg(event.target.value);
+      setTweetMsg(event.target.value);
     }
   };
 
@@ -50,24 +63,40 @@ function App() {
 
   const onPublishClick = async (event) => {
     event.preventDefault();
-    console.log("ffef: " , tweetMsgCategory)
+    console.log("ffef: ", tweetMsgCategory);
     // console.log(tokenContractInstance.options.from)
 
-    if (tweetMsg !== "" && tweetMsgCategory !== "" && tweetMsgCategory !== "Choose...") {
-      await publishTweet(tweetMsg.toString(), tweetMsgCategory.toString()).then(res => {
-        // console.log("app.js function printing.....")
-        // console.log(res)
-        setTokenId(res.toString());
-      });
+    if (
+      tweetMsg !== "" &&
+      tweetMsgCategory !== "" &&
+      tweetMsgCategory !== "Choose..."
+    ) {
+      await publishTweet(tweetMsg.toString(), tweetMsgCategory.toString()).then(
+        (res) => {
+          // console.log("app.js function printing.....")
+          // console.log(res)
+          setTokenId(res.toString());
+        }
+      );
 
       // console.log(id)
       // alert("Tweet message entered: " + tweetMsg + " with category: " + tweetMsgCategory);
     }
   };
   // console.log("txn. done.. Token Id: " , tokenId)
+  const onLikeClick = async (event, tokenId) => {
+    event.preventDefault();
+    console.log("clicked like button");
+    console.log(tokenId)
+    // await getAllTweets().then((result) => {
+    //   console.log("inside app.js file");
+    //   console.log(result[11]);
+    //   setAllTweets(result)
+    //   console.log(allTweets.length);
+    // });
+  };
   return (
     <div className="App">
-
       <header>
         {/* <!-- navbar starts here --> */}
         <nav class="navbar navbar-expand-lg navbar-light bg-white py-1">
@@ -524,7 +553,86 @@ function App() {
             <div class="col-12 pl-lg-5 col-lg-6">
               <div class="raleway-semibold">Latest</div>
               <div class="row">
-                <div class="col-12 my-3">
+                {allTweets.length > 0 &&
+                  allTweets.reverse().map((value, index) => {
+                    // console.log(index)
+                    // console.log(value.id)
+                    if (index <= 4) {
+                      return (
+                        <div class="col-12 my-3" key={index}>
+                          <div class="tweet-details">
+                            <div class="bg-black px-3 py-2">
+                              <div class="owner-id">
+                                {" "}
+                                <span class="title theme-text">
+                                  Owner:
+                                </span>{" "}
+                                <span class="p-id text-white">
+                                  {value.owner}
+                                </span>
+                              </div>
+                              <div class="row justify-content-between">
+                                <div class="col-auto token-id">
+                                  <span class="title theme-text">
+                                    Token ID:
+                                  </span>{" "}
+                                  <span class="p-id text-white">
+                                    {value.id}
+                                  </span>
+                                </div>
+                                <div class="col-auto category">
+                                  <span class="title theme-text">
+                                    Category:
+                                  </span>{" "}
+                                  <span class="p-id text-white">
+                                    {value.category}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="bg-white px-3">
+                              <div class="desc pt-3 pb-2">{value.content}</div>
+
+                              <div class="text-right">
+                                <span class="like px-1">
+                                  <button key={index}
+                                    class="btn border-0"
+                                    onClick={(event) => {
+                                      onLikeClick(event, value.id);
+                                    }}
+                                  >
+                                    <img
+                                      src="./assets/img/like.png"
+                                      alt="like_img"
+                                    />
+                                  </button>
+                                  <span class="count px-1">{value.likes}</span>
+                                </span>
+                                <span class="unLike px-1">
+                                  <button class="btn border-0">
+                                    <img
+                                      src="./assets//img/unlike.png"
+                                      alt="unlike_img"
+                                    />
+                                  </button>
+                                  <span class="count px-1">
+                                    {value.dislikes}
+                                  </span>
+                                </span>
+                                <span class="opensea pl-3">
+                                  <img
+                                    src="./assets/img/open-sea.svg"
+                                    alt="open_sea_img"
+                                  />
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
+                {/* <div class="col-12 my-3">
                   <div class="tweet-details">
                     <div class="bg-black px-3 py-2">
                       <div class="owner-id">
@@ -540,8 +648,8 @@ function App() {
                           <span class="p-id text-white">15AB8F007</span>
                         </div>
                         <div class="col-auto category">
-                          <span class="title theme-text">Token ID:</span>{" "}
-                          <span class="p-id text-white">15AB8F007</span>
+                          <span class="title theme-text">Category:</span>{" "}
+                          <span class="p-id text-white">General</span>
                         </div>
                       </div>
                     </div>
@@ -555,7 +663,12 @@ function App() {
 
                       <div class="text-right">
                         <span class="like px-1">
-                          <button class="btn border-0">
+                          <button
+                            class="btn border-0"
+                            onClick={(event) => {
+                              onLikeClick(event);
+                            }}
+                          >
                             <img src="./assets/img/like.png" alt="like_img" />
                           </button>
                           <span class="count px-1">18</span>
@@ -743,7 +856,7 @@ function App() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div class="col-12 text-center mt-5">
                   <button class="btn text-white bg-black">Load More</button>
                 </div>

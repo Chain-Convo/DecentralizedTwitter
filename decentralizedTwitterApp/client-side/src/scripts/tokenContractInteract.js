@@ -12,8 +12,8 @@ export const publishTweet = (tweetMsg, tweetMsgCategory) => {
             .create(tweetMsg, tweetMsgCategory)
             .send({value: "0x38D7EA4C68000"})
             .once("receipt", async(result) => {
-                console.log("printing in tokenContract Interact info file..")
-                console.log(result.events.Transfer.returnValues.tokenId);
+                // console.log("printing in tokenContract Interact info file..")
+                // console.log(result.events.Transfer.returnValues.tokenId);
                 resolve(result.events.Transfer.returnValues.tokenId)
             });
         } catch (error) {
@@ -22,6 +22,20 @@ export const publishTweet = (tweetMsg, tweetMsgCategory) => {
     })
 }
 
+export const getAllTweets = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let allTweets = await tokenContractInstance.methods
+            .tweets()
+            .call()
+            console.log("printing inside tokenContract instance info file..")
+            console.log(allTweets)
+            resolve(allTweets)
+        } catch (error) {
+            reject (error)
+        }
+    })
+}
 // export const userLogin = () => {
 //   return new Promise(async (resolve, reject) => {
 //     try {
