@@ -5,7 +5,7 @@ import "./App.css";
 import Web3 from "web3";
 // import TokenContract from "./contracts/tokenContractInfo.json";
 import tokenContractInstance from "./scripts/tokenContractInstance";
-import { publishTweet, getAllTweets } from "./scripts/tokenContractInteract";
+import { publishTweet, getAllTweets, likeTweet, dislikeTweet } from "./scripts/tokenContractInteract";
 
 function App() {
   const [allTweets, setAllTweets] = React.useState([]);
@@ -30,12 +30,10 @@ function App() {
 
   React.useEffect(() => {
     getAllTweets().then((result) => {
-      console.log("inside app.js file");
-      console.log(result[11]);
       setAllTweets(result.reverse());
       // console.log(allTweets.length);
     });
-  }, []);
+  }, [allTweets]);
 
   // if (allTweets.length > 0) {
 
@@ -88,13 +86,26 @@ function App() {
     event.preventDefault();
     console.log("clicked like button");
     console.log(tokenId)
-    // await getAllTweets().then((result) => {
-    //   console.log("inside app.js file");
-    //   console.log(result[11]);
-    //   setAllTweets(result)
-    //   console.log(allTweets.length);
-    // });
+    await likeTweet(Number(tokenId)).then(
+      (result) => {
+        console.log("app.js function printing")
+        console.log(result)
+      }
+    )
   };
+
+  const onDislikeClick = async (event, tokenId) => {
+    event.preventDefault();
+    console.log("clicked like button");
+    console.log(tokenId)
+    await dislikeTweet(Number(tokenId)).then(
+      (result) => {
+        console.log("app.js function printing")
+        console.log(result)
+      }
+    )
+  };
+
   return (
     <div className="App">
       <header>
@@ -609,7 +620,12 @@ function App() {
                                   <span class="count px-1">{value.likes}</span>
                                 </span>
                                 <span class="unLike px-1">
-                                  <button class="btn border-0">
+                                  <button key={index}
+                                  class="btn border-0"
+                                  onClick={(event) => {
+                                    onDislikeClick(event, value.id);
+                                  }}
+                                  >
                                     <img
                                       src="./assets//img/unlike.png"
                                       alt="unlike_img"

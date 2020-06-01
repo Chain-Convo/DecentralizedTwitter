@@ -22,14 +22,48 @@ export const publishTweet = (tweetMsg, tweetMsgCategory) => {
     })
 }
 
+export const likeTweet = (tokenId) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            await tokenContractInstance.methods
+            .like(tokenId)
+            .send({value: "0x5AF3107A4000"})
+            .once("receipt", async (result) => {
+                console.log("printing inside the tokenContract info file")
+                console.log(result)
+                resolve(result)
+            })
+        } catch (error) {
+            reject (error)
+        }
+    })
+}
+
+export const dislikeTweet = (tokenId) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            await tokenContractInstance.methods
+            .dislike(tokenId)
+            .send()
+            .once("receipt", async (result) => {
+                console.log("printing inside the tokenContract info file")
+                console.log(result)
+                resolve(result)
+            })
+        } catch (error) {
+            reject (error)
+        }
+    })
+}
+
 export const getAllTweets = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let allTweets = await tokenContractInstance.methods
             .tweets()
             .call()
-            console.log("printing inside tokenContract instance info file..")
-            console.log(allTweets)
+            // console.log("printing inside tokenContract instance info file..")
+            // console.log(allTweets)
             resolve(allTweets)
         } catch (error) {
             reject (error)
