@@ -9,6 +9,7 @@ import { publishTweet, getAllTweets, likeTweet, dislikeTweet } from "./scripts/t
 
 function App() {
   const [allTweets, setAllTweets] = React.useState([]);
+  const [trendingTweets, setTrendingTweets] = React.useState([]);
   //  Connecting to Metamask on load of webpage..
   React.useEffect(() => {
     async function connectMetamask() {
@@ -30,8 +31,17 @@ function App() {
 
   React.useEffect(() => {
     getAllTweets().then((result) => {
+      // console.log(result.reverse())
       setAllTweets(result.reverse());
-      // console.log(allTweets.length);
+
+      //  Setting the list of trending tweets based on the number of likes
+      setTrendingTweets(allTweets.sort(
+        function(a, b) { 
+          return parseInt(b[3]) - parseInt(a[3])
+      }
+      ))
+      // console.log(allTweets.sort("likes"))
+      // console.log(allTweets);
     });
   }, [allTweets]);
 
@@ -335,7 +345,67 @@ function App() {
             <div class="col-12 pr-lg-5 col-lg-6">
               <div class="raleway-semibold">Trending</div>
               <div class="row">
-                <div class="col-12 my-3">
+                {trendingTweets.length > 0 &&
+                  trendingTweets.map((value, index) => {
+                    if (index <= 4) {
+                      return (
+                        <div class="col-12 my-3">
+                  <div class="tweet-details">
+                    <div class="bg-black px-3 py-2">
+                      <div class="owner-id">
+                        {" "}
+                        <span class="title theme-text">Owner:</span>{" "}
+                        <span class="p-id text-white">
+                          {value.owner}
+                        </span>
+                      </div>
+                      <div class="row justify-content-between">
+                        <div class="col-auto token-id">
+                          <span class="title theme-text">Token ID:</span>{" "}
+                          <span class="p-id text-white">{value.id}</span>
+                        </div>
+                        <div class="col-auto category">
+                          <span class="title theme-text">Category:</span>{" "}
+                          <span class="p-id text-white">{value.category}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bg-white px-3">
+                      <div class="desc pt-3 pb-2">
+                      {value.content}
+                      </div>
+
+                      <div class="text-right">
+                        <span class="like px-1">
+                          <button class="btn border-0">
+                            <img src="./assets/img/like.png" alt="like_img" />
+                          </button>
+                          <span class="count px-1">{value.likes}</span>
+                        </span>
+                        <span class="unLike px-1">
+                          <button class="btn border-0">
+                            <img
+                              src="./assets//img/unlike.png"
+                              alt="unlike_img"
+                            />
+                          </button>
+                          <span class="count px-1">{value.dislikes}</span>
+                        </span>
+                        <span class="opensea pl-3">
+                          <img
+                            src="./assets/img/open-sea.svg"
+                            alt="open_sea_img"
+                          />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                      )
+                    }
+                  })
+                }
+                {/* <div class="col-12 my-3">
                   <div class="tweet-details">
                     <div class="bg-black px-3 py-2">
                       <div class="owner-id">
@@ -499,62 +569,7 @@ function App() {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-12 my-3">
-                  <div class="tweet-details">
-                    <div class="bg-black px-3 py-2">
-                      <div class="owner-id">
-                        {" "}
-                        <span class="title theme-text">Owner:</span>{" "}
-                        <span class="p-id text-white">
-                          0x012387128040918201209398213012
-                        </span>
-                      </div>
-                      <div class="row justify-content-between">
-                        <div class="col-auto token-id">
-                          <span class="title theme-text">Token ID:</span>{" "}
-                          <span class="p-id text-white">15AB8F007</span>
-                        </div>
-                        <div class="col-auto category">
-                          <span class="title theme-text">Token ID:</span>{" "}
-                          <span class="p-id text-white">15AB8F007</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="bg-white px-3">
-                      <div class="desc pt-3 pb-2">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                        sed diam nonumy eirmod tempor invidunt ut labore et
-                        dolore magna aliquyam erat, sed diam voluptua. At vero
-                        eos et accusam et justo
-                      </div>
-
-                      <div class="text-right">
-                        <span class="like px-1">
-                          <button class="btn border-0">
-                            <img src="./assets/img/like.png" alt="like_img" />
-                          </button>
-                          <span class="count px-1">18</span>
-                        </span>
-                        <span class="unLike px-1">
-                          <button class="btn border-0">
-                            <img
-                              src="./assets//img/unlike.png"
-                              alt="unlike_img"
-                            />
-                          </button>
-                          <span class="count px-1">2</span>
-                        </span>
-                        <span class="opensea pl-3">
-                          <img
-                            src="./assets/img/open-sea.svg"
-                            alt="open_sea_img"
-                          />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </div> */}
                 <div class="col-12 text-center my-5">
                   <button class="btn text-white bg-black">Load More</button>
                 </div>
