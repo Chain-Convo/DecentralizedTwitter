@@ -416,12 +416,19 @@ function App() {
                                     {value.dislikes}
                                   </span>
                                 </span>
-                                <span class="opensea pl-3">
-                                  <img
-                                    src="./assets/img/open-sea.svg"
-                                    alt="open_sea_img"
-                                  />
-                                </span>
+                                <a
+                                  target="_blank"
+                                  href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                                >
+                                  {/* https://rinkeby.opensea.io/assets/0x30cb06ec313f8d4acc618195389f442727aaf1d6/12 */}
+
+                                  <span class="opensea pl-3">
+                                    <img
+                                      src="./assets/img/open-sea.svg"
+                                      alt="open_sea_img"
+                                    />
+                                  </span>
+                                </a>
                               </div>
                             </div>
                           </div>
@@ -683,12 +690,18 @@ function App() {
                                     {value.dislikes}
                                   </span>
                                 </span>
-                                <span class="opensea pl-3">
-                                  <img
-                                    src="./assets/img/open-sea.svg"
-                                    alt="open_sea_img"
-                                  />
-                                </span>
+                                <a
+                                  target="_blank"
+                                  href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                                >
+                                  {/* https://rinkeby.opensea.io/assets/0x30cb06ec313f8d4acc618195389f442727aaf1d6/12 */}
+                                  <span class="opensea pl-3">
+                                    <img
+                                      src="./assets/img/open-sea.svg"
+                                      alt="open_sea_img"
+                                    />
+                                  </span>
+                                </a>
                               </div>
                             </div>
                           </div>
