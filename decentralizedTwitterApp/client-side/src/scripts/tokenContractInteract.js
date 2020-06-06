@@ -70,6 +70,21 @@ export const getAllTweets = () => {
         }
     })
 }
+
+// export const getTweetInfo = (tokenId) => {
+//     return new Promise(async (resolve, reject) => {
+//         try {
+//             let tweetInfo = await tokenContractInstance.methods
+//             ._tweets(tokenId)
+//             .call()
+//             console.log("printing inside tokenContract instance info file..")
+//             console.log(tweetInfo)
+//             resolve(tweetInfo)
+//         } catch (error) {
+//             reject (error)
+//         }
+//     })
+// }
 // export const userLogin = () => {
 //   return new Promise(async (resolve, reject) => {
 //     try {
