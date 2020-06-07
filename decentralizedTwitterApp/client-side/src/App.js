@@ -19,6 +19,8 @@ import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
 // });
 // function App() {
 const App = () => {
+  // let location = useLocation()
+  // console.log(location)
   // React States to set the tweet msg, category, token Id, address
   // const [allTweets, setAllTweets] = React.useState([]);
   // const [trendingTweets, setTrendingTweets] = React.useState([]);
@@ -45,7 +47,7 @@ const App = () => {
       }
     }
     connectMetamask();
-  });
+  }, []);
 
   // React.useEffect(() => {
   //   getAllTweets().then((result) => {
@@ -322,9 +324,10 @@ const App = () => {
 
         {/* <!-- MAIN SECTION --> */}
         <Switch>
-          <Route path="/token/:id">
-            <TokenPage></TokenPage>
+          <Route path="/token/:id" component={TokenPage}>
+            {/* <TokenPage></TokenPage> */}
           </Route>
+          <Route path="/owner/:address" component={OwnerPage}></Route>
           <Route path="/">
             <Homepage></Homepage>
           </Route>
@@ -342,25 +345,131 @@ const App = () => {
   );
 };
 
-function TokenPage(props) {
+const OwnerPage = () => {
+  const address = window.location.pathname.replace("/owner/", "");
+
+  return <div>TODO: Implement owner's page for address: {address}</div>;
+};
+
+const TokenPage = (props) => {
   const tokenId = window.location.pathname.replace("/token/", "");
+  let owner, category, likes, dislikes, content;
 
   //  remove this if condition to check the error
-  if (props.location != undefined){
-
-    console.log("printing")
-    console.log(props)
-    const { foo, category } = props.location.state;   //  This is where I am not able to do the stuff..
+  if (props.location !== undefined) {
+    ({ owner, content, category, likes, dislikes } = props.location.state);
   }
-  console.log(tokenId);
-  // console.log(foo)
-  //  console.log(category)
+  // console.log(tokenId);
+  // console.log(category);
+  // console.log(owner);
+  // console.log(likes);
+  // console.log(dislikes);
+  // console.log(content)
 
   if (!tokenId) {
     return <div>No Token Id passed.!</div>;
   }
-  return <div>TODO: Token info here: token id = {tokenId}</div>;
-}
+  return (
+    // <div>TODO: Token info here: token id = {tokenId}</div>
+    <div class="col-12 pl-lg-5 col-lg-6">
+      <div class="raleway-semibold">{"Token Info".toUpperCase()}</div>
+      <div class="row">
+        <div class="col-12 my-3" key={tokenId}>
+          <div class="tweet-details">
+            <div class="bg-black px-3 py-2">
+              <div class="owner-id">
+                {" "}
+                <span class="title theme-text">
+                  {"Tweet token details".toUpperCase()}
+                </span>{" "}
+                {/* <span class="p-id text-white">{owner}</span> */}
+              </div>
+              <div class="row justify-content-between">
+                <div class="col-auto token-id">
+                  {/* <Link
+                    to={{
+                      pathname: `token/${value.id}`,
+                      state: {
+                        owner: value.owner,
+                        category: value.category,
+                        likes: value.likes,
+                        dislikes: value.dislikes,
+                      },
+                    }}
+                  > */}
+                  {/* <span class="title theme-text">Token ID:</span>{" "} */}
+                  {/* <span class="p-id text-white">{tokenId}</span> */}
+                  {/* </Link> */}
+                </div>
+                <div class="col-auto category">
+                  {/* <span class="title theme-text">Category:</span>{" "} */}
+                  {/* <span class="p-id text-white">{category}</span> */}
+                </div>
+              </div>
+            </div>
+            <div class="bg-white px-3">
+              <div class="desc pt-3 pb-2">
+                Owner: {"    "}
+                {owner}
+              </div>
+              <div class="desc pt-3 pb-2">
+                TokenId: {"  "}
+                {tokenId}
+              </div>
+              <div class="desc pt-3 pb-2">
+                Tweet: {"    "}
+                {content}
+              </div>
+              <div class="desc pt-3 pb-2">Category: {category}</div>
+              <div class="desc pt-3 pb-2">
+                Likes: {"    "}
+                {likes}
+              </div>
+              <div class="desc pt-3 pb-2">Dislikes: {dislikes}</div>
+
+              <div class="text-right">
+                {/* <span class="like px-1">
+                  <button
+                    key={tokenId}
+                    class="btn border-0"
+                    // onClick={(event) => {
+                    //   onLikeClick(event, value.id);
+                    // }}
+                  >
+                    <img src="./assets/img/like.png" alt="like_img" />
+                  </button>
+                  <span class="count px-1">{likes}</span>
+                </span> */}
+                {/* <span class="unLike px-1">
+                  <button
+                    key={tokenId}
+                    class="btn border-0"
+                    // onClick={(event) => {
+                    //   onDislikeClick(event, value.id);
+                    // }}
+                  >
+                    <img src="./assets//img/unlike.png" alt="unlike_img" />
+                  </button>
+                  <span class="count px-1">{dislikes}</span>
+                </span> */}
+                {/* <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${tokenId}`}
+                >
+                  
+                  <span class="opensea pl-3">
+                    <img src="./assets/img/open-sea.svg" alt="open_sea_img" />
+                  </span>
+                </a> */}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 function Homepage() {
   const [allTweets, setAllTweets] = React.useState([]);
@@ -793,8 +902,12 @@ function Homepage() {
                           <div class="bg-black px-3 py-2">
                             <div class="owner-id">
                               {" "}
-                              <span class="title theme-text">Owner:</span>{" "}
-                              <span class="p-id text-white">{value.owner}</span>
+                              <Link to={`owner/${value.owner}`}>
+                                <span class="title theme-text">Owner:</span>{" "}
+                                <span class="p-id text-white">
+                                  {value.owner}
+                                </span>
+                              </Link>
                             </div>
                             <div class="row justify-content-between">
                               <div class="col-auto token-id">
@@ -813,10 +926,13 @@ function Homepage() {
                                 <Link
                                   to={{
                                     pathname: `token/${value.id}`,
-                                    state: { 
-                                      foo: "bar",
-                                      category: value.category 
-                                    }
+                                    state: {
+                                      owner: value.owner,
+                                      content: value.content,
+                                      category: value.category,
+                                      likes: value.likes,
+                                      dislikes: value.dislikes,
+                                    },
                                   }}
                                 >
                                   <span class="title theme-text">
