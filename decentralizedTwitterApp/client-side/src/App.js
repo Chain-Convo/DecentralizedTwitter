@@ -13,6 +13,7 @@ import {
   getTweetInfo,
 } from "./scripts/tokenContractInteract";
 import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 // const TokenPage = React.lazy(() => {
 //   return import("./container/TokenPage/TokenPage");
@@ -152,6 +153,44 @@ const App = () => {
   //   return route
   // }
 
+  const [filters, setFilters] = React.useState({
+    general: false,
+    cryptocurrency: false,
+    nft: false,
+    arts: false,
+    games: false,
+    science: false,
+    technology: false,
+    politics: false,
+    society: false,
+    sports: false,
+  });
+
+  const onClick = (filterName) => {
+    // console.log(filterName)
+    // console.log({...filters, [filterName]: !filters[filterName]})
+    // alert("clicked category: " + filterName)
+    setFilters({
+      general: false,
+      cryptocurrency: false,
+      nft: false,
+      arts: false,
+      games: false,
+      science: false,
+      technology: false,
+      politics: false,
+      society: false,
+      sports: false,
+      [filterName]: !filters[filterName],
+    });
+  };
+  // console.log(filters.general)
+
+  // const onClickCategoryFilter = (event) => {
+  //   event.preventDefault();
+  //   alert("clicked filtered category general");
+  // };
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -193,7 +232,7 @@ const App = () => {
                 <div class="dropdown-divider"></div>
 
                 <ul class="navbar-nav ml-auto">
-                  <li class="nav-item dropdown d-lg-none">
+                  {/* <li class="nav-item dropdown d-lg-none">
                     <a
                       class="nav-link dropdown-toggle"
                       href="#"
@@ -203,7 +242,7 @@ const App = () => {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Categories
+                      Categories21
                       <i>
                         <img
                           src="./assets/img/expand_more-24px.svg"
@@ -245,7 +284,7 @@ const App = () => {
                         Sports
                       </a>
                     </div>
-                  </li>
+                  </li> */}
 
                   <div class="dropdown-divider"></div>
 
@@ -285,37 +324,114 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  Categories
+                  Categories11
                 </div>
                 <div class="col-auto ml-auto">
-                  <button class="btn p-0 border-0">General</button>
+                  {/* <button
+                    class="btn p-0 border-0"
+                    onClick={(event) => {
+                      onClickCategoryFilter(event);
+                    }}
+                  >
+                    General
+                  </button> */}
+                  <FilterCategoryButton
+                    isActive={filters.general}
+                    onClick={onClick}
+                    filterName="general"
+                  >
+                    General
+                  </FilterCategoryButton>
                 </div>
                 <div class="col-auto">
-                  <button class="btn p-0 border-0">Cryptocurrency</button>
+                  {/* <button class="btn p-0 border-0">Cryptocurrency</button> */}
+                  <FilterCategoryButton
+                    isActive={filters.cryptocurrency}
+                    onClick={onClick}
+                    filterName="cryptocurrency"
+                  >
+                    Cryptocurrency
+                  </FilterCategoryButton>
                 </div>
                 <div class="col-auto">
-                  <button class="btn p-0 border-0">NFT</button>
+                  {/* <button class="btn p-0 border-0">NFT</button> */}
+                  <FilterCategoryButton
+                    isActive={filters.nft}
+                    onClick={onClick}
+                    filterName="nft"
+                  >
+                    NFT
+                  </FilterCategoryButton>
                 </div>
                 <div class="col-auto">
-                  <button class="btn p-0 border-0">Arts</button>
+                  {/* <button class="btn p-0 border-0">Arts</button> */}
+                  <FilterCategoryButton
+                    isActive={filters.arts}
+                    onClick={onClick}
+                    filterName="arts"
+                  >
+                    Arts
+                  </FilterCategoryButton>
                 </div>
                 <div class="col-auto">
-                  <button class="btn p-0 border-0">Games</button>
+                  {/* <button class="btn p-0 border-0">Games</button> */}
+                  <FilterCategoryButton
+                    isActive={filters.games}
+                    onClick={onClick}
+                    filterName="games"
+                  >
+                    Games
+                  </FilterCategoryButton>
                 </div>
                 <div class="col-auto">
-                  <button class="btn p-0 border-0">Science</button>
+                  {/* <button class="btn p-0 border-0">Science</button> */}
+                  <FilterCategoryButton
+                    isActive={filters.science}
+                    onClick={onClick}
+                    filterName="science"
+                  >
+                    Science
+                  </FilterCategoryButton>
                 </div>
                 <div class="col-auto">
-                  <button class="btn p-0 border-0">Technology</button>
+                  {/* <button class="btn p-0 border-0">Technology</button> */}
+                  <FilterCategoryButton
+                    isActive={filters.technology}
+                    onClick={onClick}
+                    filterName="technology"
+                  >
+                    Technology
+                  </FilterCategoryButton>
                 </div>
                 <div class="col-auto">
-                  <button class="btn p-0 border-0">Politics</button>
+                  {/* <button class="btn p-0 border-0">Politics</button> */}
+                  <FilterCategoryButton
+                    isActive={filters.politics}
+                    onClick={onClick}
+                    filterName="politics"
+                  >
+                    Politics
+                  </FilterCategoryButton>
                 </div>
                 <div class="col-auto">
-                  <button class="btn p-0 border-0">Society</button>
+                  {/* <button class="btn p-0 border-0">Society</button> */}
+                  <FilterCategoryButton
+                    isActive={filters.society}
+                    onClick={onClick}
+                    filterName="society"
+                  >
+                    Society
+                  </FilterCategoryButton>
                 </div>
                 <div class="col-auto">
-                  <button class="btn p-0 border-0">Sports</button>
+                  {/* <button class="btn p-0 border-0">Sports</button> */}
+                  <FilterCategoryButton
+                    isActive={filters.sports}
+                    onClick={onClick}
+                    filterName="sports"
+                  >
+                    Sports
+                  </FilterCategoryButton>
                 </div>
               </div>
             </div>
@@ -329,7 +445,7 @@ const App = () => {
           </Route>
           <Route path="/owner/:address" component={OwnerPage}></Route>
           <Route path="/">
-            <Homepage></Homepage>
+            <Homepage filtersList={filters}></Homepage>
           </Route>
         </Switch>
         {/* <!-- Footer --> */}
@@ -344,6 +460,21 @@ const App = () => {
     </BrowserRouter>
   );
 };
+
+function FilterCategoryButton({ children, isActive, onClick, filterName }) {
+  // console.log("printing category filter");
+  // console.log(filterName)
+  return (
+    <Button
+      class="btn p-0 border-0"
+      onClick={() => {
+        onClick(filterName);
+      }}
+    >
+      {children}
+    </Button>
+  );
+}
 
 const OwnerPage = () => {
   const address = window.location.pathname.replace("/owner/", "");
@@ -471,7 +602,8 @@ const TokenPage = (props) => {
   );
 };
 
-function Homepage() {
+function Homepage({ filtersList }) {
+  // console.log(filtersList)
   const [allTweets, setAllTweets] = React.useState([]);
   const [trendingTweets, setTrendingTweets] = React.useState([]);
   const [tweetMsg, setTweetMsg] = React.useState("");
@@ -479,6 +611,171 @@ function Homepage() {
   const [tokenId, setTokenId] = React.useState("");
   const [latestLoadMoreCount, setLatestLoadMoreCount] = React.useState(1);
   const [trendingLoadMoreCount, setTrendingLoadMoreCount] = React.useState(1);
+  // let [filteredLatestCategories, setFilteredLatestCategories] = React.useState([])
+
+  let filteredLatestCategories = allTweets;
+  filteredLatestCategories = filteredLatestCategories.filter(
+    (filteredLatestCategory) => {
+      if (
+        filtersList.general &&
+        !filteredLatestCategory.category.toLowerCase().includes("general")
+      ) {
+        // filtersList = {...filtersList, general: !filtersList.general}
+        return false;
+      }
+      if (
+        filtersList.cryptocurrency &&
+        !filteredLatestCategory.category
+          .toLowerCase()
+          .includes("cryptocurrency")
+      ) {
+        // filtersList = {...filtersList, cryptocurrency: !filtersList.cryptocurrency}
+        return false;
+      }
+      if (
+        filtersList.nft &&
+        !filteredLatestCategory.category.toLowerCase().includes("nft")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.arts &&
+        !filteredLatestCategory.category.toLowerCase().includes("arts")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.games &&
+        !filteredLatestCategory.category.toLowerCase().includes("games")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.science &&
+        !filteredLatestCategory.category.toLowerCase().includes("science")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.technology &&
+        !filteredLatestCategory.category.toLowerCase().includes("technology")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.politics &&
+        !filteredLatestCategory.category.toLowerCase().includes("politics")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.society &&
+        !filteredLatestCategory.category.toLowerCase().includes("society")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.sports &&
+        !filteredLatestCategory.category.toLowerCase().includes("sports")
+      ) {
+        return false;
+      }
+
+      return true;
+    }
+  );
+
+  let filteredTrendingCategories = trendingTweets;
+
+  filteredTrendingCategories = filteredTrendingCategories.filter(
+    (filteredTrendingCategory) => {
+      if (
+        filtersList.general &&
+        !filteredTrendingCategory.category.toLowerCase().includes("general")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.cryptocurrency &&
+        !filteredTrendingCategory.category
+          .toLowerCase()
+          .includes("cryptocurrency")
+      ) {
+        // filtersList = {...filtersList, cryptocurrency: !filtersList.cryptocurrency}
+        return false;
+      }
+      if (
+        filtersList.nft &&
+        !filteredTrendingCategory.category.toLowerCase().includes("nft")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.arts &&
+        !filteredTrendingCategory.category.toLowerCase().includes("arts")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.games &&
+        !filteredTrendingCategory.category.toLowerCase().includes("games")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.science &&
+        !filteredTrendingCategory.category.toLowerCase().includes("science")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.technology &&
+        !filteredTrendingCategory.category.toLowerCase().includes("technology")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.politics &&
+        !filteredTrendingCategory.category.toLowerCase().includes("politics")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.society &&
+        !filteredTrendingCategory.category.toLowerCase().includes("society")
+      ) {
+        return false;
+      }
+      if (
+        filtersList.sports &&
+        !filteredTrendingCategory.category.toLowerCase().includes("sports")
+      ) {
+        return false;
+      }
+      return true;
+      // console.log(category.category.toLowerCase().includes("general"))
+    }
+  );
+
+  // const [filters, setFilters] = React.useState({
+  //   general: false,
+  //   cryptocurrency: false,
+  //   nft: false,
+  //   arts: false,
+  //   games: false,
+  //   science: false,
+  //   technology: false,
+  //   politics: false,
+  //   society: false,
+  //   sports: false,
+  // });
+
+  // const onClickGeneral = () => {
+  //   setFilters({
+  //     ...filters,
+  //     general: !filters.general,
+  //   });
+  // };
 
   React.useEffect(() => {
     getAllTweets().then((result) => {
@@ -642,8 +939,8 @@ function Homepage() {
           <div class="col-12 pr-lg-5 col-lg-6">
             <div class="raleway-semibold">Trending</div>
             <div class="row">
-              {trendingTweets.length > 0 &&
-                trendingTweets.map((value, index) => {
+              {filteredTrendingCategories.length > 0 &&
+                filteredTrendingCategories.map((value, index) => {
                   if (index < trendingLoadMoreCount * 5) {
                     return (
                       <div class="col-12 my-3">
@@ -891,8 +1188,8 @@ function Homepage() {
           <div class="col-12 pl-lg-5 col-lg-6">
             <div class="raleway-semibold">Latest</div>
             <div class="row">
-              {allTweets.length > 0 &&
-                allTweets.reverse().map((value, index) => {
+              {filteredLatestCategories.length > 0 &&
+                filteredLatestCategories.map((value, index) => {
                   // console.log(index)
                   // console.log(value.id)
                   if (index < latestLoadMoreCount * 5) {
