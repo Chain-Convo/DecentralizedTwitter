@@ -5,13 +5,15 @@ import tokenContractInstance from "./tokenContractInstance"
 //   .create(tweetMsg.toString(), tweetMsgCategory.toString())
 //   .send({ from: account, value: "0x38D7EA4C68000" });
 
-export const publishTweet = (tweetMsg, tweetMsgCategory) => {
+export const publishTweet = (tweetMsg, tweetMsgCategory, feesToCreate) => {
     return new Promise(async (resolve, reject) => {
         try {
             await tokenContractInstance.methods
             .create(tweetMsg, tweetMsgCategory)
-            .send({value: "0x38D7EA4C68000"})
+            .send({value: feesToCreate})
             .once("receipt", async(result) => {
+                // 0x38D7EA4C68000
+                // "0x5AF3107A4000"
                 // console.log("printing in tokenContract Interact info file..")
                 // console.log(result.events.Transfer.returnValues.tokenId);
                 resolve(result.events.Transfer.returnValues.tokenId)
@@ -22,15 +24,15 @@ export const publishTweet = (tweetMsg, tweetMsgCategory) => {
     })
 }
 
-export const likeTweet = (tokenId) => {
+export const likeTweet = (tokenId, feesToLike) => {
     return new Promise(async(resolve, reject) => {
         try {
             await tokenContractInstance.methods
             .like(tokenId)
-            .send({value: "0x5AF3107A4000"})
+            .send({value: feesToLike})
             .once("receipt", async (result) => {
-                console.log("printing inside the tokenContract info file")
-                console.log(result)
+                // console.log("printing inside the tokenContract info file")
+                // console.log(result)
                 resolve(result)
             })
         } catch (error) {
@@ -67,6 +69,39 @@ export const getAllTweets = () => {
             resolve(allTweets)
         } catch (error) {
             reject (error)
+        }
+    })
+}
+
+export const getFeesToCreate = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let feesToCreate = await tokenContractInstance.methods
+            .feesToCreate()
+            .call()
+            // console.log("printing create fees inside script")
+            // console.log(feesToCreate)
+            resolve(feesToCreate)
+        }
+        catch (error) {
+            // console.log("printing error in script......")
+            reject(error)
+        }
+    })
+}
+
+export const getFeesToLike = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let feesToLike = await tokenContractInstance.methods
+            .feesToLike()
+            .call()
+            // console.log("printing like fees inside script..")
+            // console.log(feesToLike)
+            resolve(feesToLike)
+        } catch (error) {
+            // console.log("printing error in script..")
+            reject(error)
         }
     })
 }

@@ -11,6 +11,8 @@ import {
   likeTweet,
   dislikeTweet,
   getTweetInfo,
+  getFeesToCreate,
+  getFeesToLike,
 } from "./scripts/tokenContractInteract";
 import {
   BrowserRouter,
@@ -43,6 +45,8 @@ const App = () => {
   // const [tokenId, setTokenId] = React.useState("");
   // const [latestLoadMoreCount, setLatestLoadMoreCount] = React.useState(1);
   // const [trendingLoadMoreCount, setTrendingLoadMoreCount] = React.useState(1);
+  const [feesToCreate, setFeesToCreate] = React.useState("");
+  const [feesToLike, setFeesToLike] = React.useState("");
 
   //  Connecting to Metamask on load of webpage..
   React.useEffect(() => {
@@ -62,6 +66,29 @@ const App = () => {
     }
     connectMetamask();
   }, []);
+
+  React.useEffect(() => {
+    try {
+      getFeesToCreate().then((result) => {
+        // console.log("printing in app.js file..")
+        // console.log(result)
+        // console.log("value: " + "0x" + Number(result).toString(16))
+        setFeesToCreate("0x" + Number(result).toString(16));
+      });
+
+      getFeesToLike().then((result) => {
+        // console.log("printing in app.js file..")
+        // console.log(result)
+        // console.log("like value: " + Number(result).toString(16))
+        setFeesToLike("0x" + Number(result).toString(16));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  // console.log(feesToCreate)
+  // console.log(feesToLike)
 
   // React.useEffect(() => {
   //   getAllTweets().then((result) => {
@@ -357,7 +384,7 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  Categories1
+                  Categories
                 </div>
                 <div class="col-auto ml-auto">
                   {/* <button
@@ -481,6 +508,8 @@ const App = () => {
             <Homepage
               filtersList={filters}
               searchValue={searchValue}
+              feesToCreate={feesToCreate}
+              feesToLike={feesToLike}
             ></Homepage>
           </Route>
         </Switch>
@@ -952,7 +981,7 @@ const TokenPage = (props) => {
   );
 };
 
-function Homepage({ filtersList, searchValue }) {
+function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
   // console.log(filtersList)
   // console.log("Search Value: " + searchValue)
   const [allTweets, setAllTweets] = React.useState([]);
@@ -1205,13 +1234,15 @@ function Homepage({ filtersList, searchValue }) {
       tweetMsgCategory !== "" &&
       tweetMsgCategory !== "Choose..."
     ) {
-      await publishTweet(tweetMsg.toString(), tweetMsgCategory.toString()).then(
-        (res) => {
-          // console.log("app.js function printing.....")
-          // console.log(res)
-          setTokenId(res.toString());
-        }
-      );
+      await publishTweet(
+        tweetMsg.toString(),
+        tweetMsgCategory.toString(),
+        feesToCreate.toString()
+      ).then((res) => {
+        // console.log("app.js function printing.....")
+        // console.log(res)
+        setTokenId(res.toString());
+      });
 
       // console.log(id)
       // alert("Tweet message entered: " + tweetMsg + " with category: " + tweetMsgCategory);
@@ -1222,7 +1253,7 @@ function Homepage({ filtersList, searchValue }) {
     event.preventDefault();
     console.log("clicked like button");
     console.log(tokenId);
-    await likeTweet(Number(tokenId)).then((result) => {
+    await likeTweet(Number(tokenId), feesToLike.toString()).then((result) => {
       console.log("app.js function printing");
       console.log(result);
     });
@@ -1328,13 +1359,42 @@ function Homepage({ filtersList, searchValue }) {
                           <div class="bg-black px-3 py-2">
                             <div class="owner-id">
                               {" "}
-                              <span class="title theme-text">Owner:</span>{" "}
-                              <span class="p-id text-white">{value.owner}</span>
+                              <Link
+                                to={{
+                                  pathname: `/owner/${value.owner}`,
+                                  state: {
+                                    owner: value.owner,
+                                    tokenList: allTweets,
+                                  },
+                                }}
+                              >
+                                <span class="title theme-text">Owner:</span>{" "}
+                                <span class="p-id text-white">
+                                  {value.owner}
+                                </span>
+                              </Link>
                             </div>
                             <div class="row justify-content-between">
                               <div class="col-auto token-id">
-                                <span class="title theme-text">Token ID:</span>{" "}
-                                <span class="p-id text-white">{value.id}</span>
+                                <Link
+                                  to={{
+                                    pathname: `/token/${value.id}`,
+                                    state: {
+                                      owner: value.owner,
+                                      content: value.content,
+                                      category: value.category,
+                                      likes: value.likes,
+                                      dislikes: value.dislikes,
+                                    },
+                                  }}
+                                >
+                                  <span class="title theme-text">
+                                    Token ID:
+                                  </span>{" "}
+                                  <span class="p-id text-white">
+                                    {value.id}
+                                  </span>
+                                </Link>
                               </div>
                               <div class="col-auto category">
                                 <span class="title theme-text">Category:</span>{" "}
@@ -1349,7 +1409,13 @@ function Homepage({ filtersList, searchValue }) {
 
                             <div class="text-right">
                               <span class="like px-1">
-                                <button class="btn border-0">
+                                <button
+                                  key={index}
+                                  class="btn border-0"
+                                  onClick={(event) => {
+                                    onLikeClick(event, value.id);
+                                  }}
+                                >
                                   <img
                                     src="./assets/img/like.png"
                                     alt="like_img"
@@ -1358,7 +1424,13 @@ function Homepage({ filtersList, searchValue }) {
                                 <span class="count px-1">{value.likes}</span>
                               </span>
                               <span class="unLike px-1">
-                                <button class="btn border-0">
+                                <button
+                                  key={index}
+                                  class="btn border-0"
+                                  onClick={(event) => {
+                                    onDislikeClick(event, value.id);
+                                  }}
+                                >
                                   <img
                                     src="./assets//img/unlike.png"
                                     alt="unlike_img"
