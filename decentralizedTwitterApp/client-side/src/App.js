@@ -12,13 +12,26 @@ import {
   dislikeTweet,
   getTweetInfo,
 } from "./scripts/tokenContractInteract";
-import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect,
+  Link,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
 // const TokenPage = React.lazy(() => {
 //   return import("./container/TokenPage/TokenPage");
 // });
 // function App() {
+
+// function useQuery() {
+//   return new URLSearchParams(useLocation().search);
+// }
+
 const App = () => {
   // let location = useLocation()
   // console.log(location)
@@ -191,6 +204,17 @@ const App = () => {
   //   alert("clicked filtered category general");
   // };
 
+  // const query = useQuery();
+  const [searchValue, setSearchString] = React.useState("");
+
+  const onClickSearch = (event) => {
+    event.preventDefault();
+    setSearchString(event.target[0].value);
+    // console.log("coming in search")
+    // console.log(event.target[0].value)
+  };
+  // console.log(searchValue)
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -217,14 +241,23 @@ const App = () => {
               </button>
 
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="form-inline mx-auto my-2 my-lg-0">
+                <form
+                  class="form-inline mx-auto my-2 my-lg-0"
+                  onSubmit={(event) => {
+                    onClickSearch(event);
+                  }}
+                >
                   <input
                     class="form-control"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
                   />
-                  <button class="btn my-2 my-sm-0" type="submit">
+                  <button
+                    class="btn my-2 my-sm-0"
+                    type="submit"
+                    // onClick={(event) => {onClickSearch(event)}}
+                  >
                     <img src="./assets/img/icon_search.svg" width="18" alt="" />
                   </button>
                 </form>
@@ -445,7 +478,10 @@ const App = () => {
           </Route>
           <Route path="/owner/:address" component={OwnerPage}></Route>
           <Route path="/">
-            <Homepage filtersList={filters}></Homepage>
+            <Homepage
+              filtersList={filters}
+              searchValue={searchValue}
+            ></Homepage>
           </Route>
         </Switch>
         {/* <!-- Footer --> */}
@@ -602,8 +638,9 @@ const TokenPage = (props) => {
   );
 };
 
-function Homepage({ filtersList }) {
+function Homepage({ filtersList, searchValue }) {
   // console.log(filtersList)
+  // console.log("Search Value: " + searchValue)
   const [allTweets, setAllTweets] = React.useState([]);
   const [trendingTweets, setTrendingTweets] = React.useState([]);
   const [tweetMsg, setTweetMsg] = React.useState("");
@@ -681,6 +718,20 @@ function Homepage({ filtersList }) {
         return false;
       }
 
+      if (
+        Boolean(searchValue) &&
+        !(
+          filteredLatestCategory.owner
+            .toLowerCase()
+            .includes(searchValue.toLowerCase()) ||
+          filteredLatestCategory.content
+            .toLowerCase()
+            .includes(searchValue.toLowerCase())
+        )
+      ) {
+        return false;
+      }
+
       return true;
     }
   );
@@ -752,6 +803,21 @@ function Homepage({ filtersList }) {
       ) {
         return false;
       }
+
+      if (
+        Boolean(searchValue) &&
+        !(
+          filteredTrendingCategory.owner
+            .toLowerCase()
+            .includes(searchValue.toLowerCase()) ||
+          filteredTrendingCategory.content
+            .toLowerCase()
+            .includes(searchValue.toLowerCase())
+        )
+      ) {
+        return false;
+      }
+
       return true;
       // console.log(category.category.toLowerCase().includes("general"))
     }
