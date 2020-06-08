@@ -512,10 +512,324 @@ function FilterCategoryButton({ children, isActive, onClick, filterName }) {
   );
 }
 
-const OwnerPage = () => {
+const OwnerPage = (props) => {
   const address = window.location.pathname.replace("/owner/", "");
+  let owner, tokenList;
 
-  return <div>TODO: Implement owner's page for address: {address}</div>;
+  if (props.location !== undefined) {
+    ({ owner, tokenList } = props.location.state);
+  }
+  console.log(owner);
+  console.log(tokenList);
+
+  let filteredLatestCategories = tokenList;
+  filteredLatestCategories = filteredLatestCategories.filter(
+    (filteredLatestCategory) => {
+      if (filteredLatestCategory.owner.toLowerCase() == owner.toLowerCase()) {
+        return true;
+      }
+      return false;
+    }
+  );
+
+  const [latestLoadMoreCount, setLatestLoadMoreCount] = React.useState(1);
+  const onLatestLoadMoreClick = (event) => {
+    event.preventDefault();
+    setLatestLoadMoreCount(latestLoadMoreCount + 1);
+  };
+
+  return (
+    // <div>TODO: Implement owner's page for address: {address}</div>
+    <div class="main mb-5">
+      <div class="container">
+        {/* <!-- Form Here --> */}
+        {/* <form action="">
+          <div class="row justify-content-center my-5">
+            <div class="col-10 col-md-9 col-lg-7 bg-white shadow-sm pt-3 px-0">
+              <textarea
+                name="tweetBox"
+                id="tweet"
+                class="w-100 border-0"
+                rows="6"
+                placeholder="Messages with 500 characters or longer may be costly to mint due to gas fees. Your NFT image will only support up to 280 characters."
+                onChange={(event) => {
+                  onChangeTweetMsg(event);
+                }}
+              ></textarea>
+
+              <div class="text-right">
+                <span>Category:</span>
+                <select
+                  id="inputState"
+                  class="form-control d-inline-block mr-3"
+                  onChange={(event) => {
+                    onSelectCategory(event);
+                  }}
+                >
+                  <option selected>Choose...</option>
+                  <option>General</option>
+                  <option>Cryptocurrency</option>
+                  <option>NFT</option>
+                  <option>Arts</option>
+                  <option>Games</option>
+                  <option>Science</option>
+                  <option>Technology</option>
+                  <option>Politics</option>
+                  <option>Society</option>
+                  <option>Sports</option>
+                </select>
+
+                <button
+                  type="submit"
+                  class="border-0 btn px-3 py-2"
+                  onClick={(event) => {
+                    onPublishClick(event);
+                  }}
+                >
+                  <span class="px-3">Publish</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form> */}
+
+        {/* <!-- Posts --> */}
+        <div class="row">
+          {/* <!-- Trending --> */}
+          {/* <div class="col-12 pr-lg-5 col-lg-6">
+            <div class="raleway-semibold">Trending</div>
+            <div class="row">
+              {filteredTrendingCategories.length > 0 &&
+                filteredTrendingCategories.map((value, index) => {
+                  if (index < trendingLoadMoreCount * 5) {
+                    return (
+                      <div class="col-12 my-3">
+                        <div class="tweet-details">
+                          <div class="bg-black px-3 py-2">
+                            <div class="owner-id">
+                              {" "}
+                              <span class="title theme-text">Owner:</span>{" "}
+                              <span class="p-id text-white">{value.owner}</span>
+                            </div>
+                            <div class="row justify-content-between">
+                              <div class="col-auto token-id">
+                                <span class="title theme-text">Token ID:</span>{" "}
+                                <span class="p-id text-white">{value.id}</span>
+                              </div>
+                              <div class="col-auto category">
+                                <span class="title theme-text">Category:</span>{" "}
+                                <span class="p-id text-white">
+                                  {value.category}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="bg-white px-3">
+                            <div class="desc pt-3 pb-2">{value.content}</div>
+
+                            <div class="text-right">
+                              <span class="like px-1">
+                                <button class="btn border-0">
+                                  <img
+                                    src="./assets/img/like.png"
+                                    alt="like_img"
+                                  />
+                                </button>
+                                <span class="count px-1">{value.likes}</span>
+                              </span>
+                              <span class="unLike px-1">
+                                <button class="btn border-0">
+                                  <img
+                                    src="./assets//img/unlike.png"
+                                    alt="unlike_img"
+                                  />
+                                </button>
+                                <span class="count px-1">{value.dislikes}</span>
+                              </span>
+                              <a
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                              >
+
+                                <span class="opensea pl-3">
+                                  <img
+                                    src="./assets/img/open-sea.svg"
+                                    alt="open_sea_img"
+                                  />
+                                </span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+                })}
+              
+              <div class="col-12 text-center my-5">
+                <button
+                  class="btn text-white bg-black"
+                  onClick={(event) => {
+                    onTrendingLoadMoreClick(event);
+                  }}
+                >
+                  Load More
+                </button>
+              </div>
+            </div>
+          </div>
+           */}
+          {/* <!-- Latest --> */}
+          <div class="col-12 pl-lg-5 col-lg-6">
+            <div class="raleway-semibold">User's Tokens</div>
+            <div class="row">
+              {filteredLatestCategories.length > 0 &&
+                filteredLatestCategories.map((value, index) => {
+                  // console.log(index)
+                  // console.log(value.id)
+                  if (index < latestLoadMoreCount * 5) {
+                    return (
+                      <div class="col-12 my-3" key={index}>
+                        <div class="tweet-details">
+                          <div class="bg-black px-3 py-2">
+                            <div class="owner-id">
+                              {" "}
+                              {/* <Link
+                                to={{
+                                  pathname: `owner/${value.owner}`,
+                                  state: {
+                                    owner: value.owner,
+                                    tokenList : allTweets
+                                  },
+                                }}
+                              > */}
+                              <span class="title theme-text">Owner:</span>{" "}
+                              <span class="p-id text-white">{value.owner}</span>
+                              {/* </Link> */}
+                            </div>
+                            <div class="row justify-content-between">
+                              <div class="col-auto token-id">
+                                {/* <a
+                                    target="_blank"
+                                    href={`#/token/${value.id}.html`}
+                                  > */}
+
+                                {/* <button
+                                  class="btn border-0"
+                                  onClick={(event) => {
+                                    onTokenButtonClick(event, value.id);
+                                  }}
+                                > */}
+
+                                <Link
+                                  to={{
+                                    pathname: `/token/${value.id}`,
+                                    state: {
+                                      owner: value.owner,
+                                      content: value.content,
+                                      category: value.category,
+                                      likes: value.likes,
+                                      dislikes: value.dislikes,
+                                    },
+                                  }}
+                                >
+                                  <span class="title theme-text">
+                                    Token ID:
+                                  </span>{" "}
+                                  <span class="p-id text-white">
+                                    {value.id}
+                                  </span>
+                                </Link>
+
+                                {/* </button> */}
+
+                                {/* </a> */}
+                              </div>
+                              <div class="col-auto category">
+                                <span class="title theme-text">Category:</span>{" "}
+                                <span class="p-id text-white">
+                                  {value.category}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="bg-white px-3">
+                            <div class="desc pt-3 pb-2">{value.content}</div>
+
+                            <div class="text-right">
+                              <span class="like px-1">
+                                {/* <button
+                                  key={index}
+                                  class="btn border-0"
+                                  // onClick={(event) => {
+                                  //   onLikeClick(event, value.id);
+                                  // }}
+                                >
+                                  <img
+                                    src="./assets/img/like.png"
+                                    alt="like_img"
+                                  />
+                                </button> */}
+                                <span class="count px-1">
+                                  Likes: {value.likes}
+                                </span>
+                              </span>
+                              <span class="unLike px-1">
+                                {/* <button
+                                  key={index}
+                                  class="btn border-0"
+                                  // onClick={(event) => {
+                                  //   onDislikeClick(event, value.id);
+                                  // }}
+                                >
+                                  <img
+                                    src="./assets//img/unlike.png"
+                                    alt="unlike_img"
+                                  />
+                                </button> */}
+                                <span class="count px-1">
+                                  Dislikes: {value.dislikes}
+                                </span>
+                              </span>
+                              <a
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                              >
+                                {/* https://rinkeby.opensea.io/assets/0x30cb06ec313f8d4acc618195389f442727aaf1d6/12 */}
+                                <span class="opensea pl-3">
+                                  {/* <img
+                                    src="./assets/img/open-sea.svg"
+                                    alt="open_sea_img"
+                                  /> */}{" "}
+                                  OpenSea Link
+                                </span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+                })}
+
+              <div class="col-12 text-center mt-5">
+                <button
+                  class="btn text-white bg-black"
+                  onClick={(event) => {
+                    onLatestLoadMoreClick(event);
+                  }}
+                >
+                  Load More
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const TokenPage = (props) => {
@@ -1265,7 +1579,15 @@ function Homepage({ filtersList, searchValue }) {
                           <div class="bg-black px-3 py-2">
                             <div class="owner-id">
                               {" "}
-                              <Link to={`owner/${value.owner}`}>
+                              <Link
+                                to={{
+                                  pathname: `/owner/${value.owner}`,
+                                  state: {
+                                    owner: value.owner,
+                                    tokenList: allTweets,
+                                  },
+                                }}
+                              >
                                 <span class="title theme-text">Owner:</span>{" "}
                                 <span class="p-id text-white">
                                   {value.owner}
@@ -1288,7 +1610,7 @@ function Homepage({ filtersList, searchValue }) {
 
                                 <Link
                                   to={{
-                                    pathname: `token/${value.id}`,
+                                    pathname: `/token/${value.id}`,
                                     state: {
                                       owner: value.owner,
                                       content: value.content,
