@@ -357,7 +357,7 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  Categories11
+                  Categories1
                 </div>
                 <div class="col-auto ml-auto">
                   {/* <button
