@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e2c5156462d24efc89b4488e6da2cb89",
+    "revision": "9f1bacdf221e9d202bf99cf550f0c643",
     "url": "/DecentralizedTwitter/index.html"
   },
   {
-    "revision": "8e9a14fa0abc1a7f8a71",
+    "revision": "0bc3261659be20a36cf2",
     "url": "/DecentralizedTwitter/static/css/main.5f361e03.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/DecentralizedTwitter/static/js/2.5967a0b2.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8e9a14fa0abc1a7f8a71",
-    "url": "/DecentralizedTwitter/static/js/main.3f60eba0.chunk.js"
+    "revision": "0bc3261659be20a36cf2",
+    "url": "/DecentralizedTwitter/static/js/main.cf3842b0.chunk.js"
   },
   {
     "revision": "a5c7c30877529fbaa83f",
