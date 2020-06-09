@@ -385,7 +385,7 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  CategoriesHR5
+                  CategoriesHR6
                 </div>
                 <div class="col-auto ml-auto">
                   {/* <button
@@ -549,18 +549,23 @@ const OwnerPage = (props) => {
   if (props.location !== undefined) {
     ({ owner, tokenList } = props.location.state);
   }
-  console.log(owner);
-  console.log(tokenList);
+  console.log("print1: " + owner);
+  console.log("print2: " + tokenList);
 
   let filteredLatestCategories = tokenList;
+  console.log("print3: " + filteredLatestCategories)
   filteredLatestCategories = filteredLatestCategories.filter(
     (filteredLatestCategory) => {
+      consolr.log("print4")
       if (filteredLatestCategory.owner.toLowerCase() == owner.toLowerCase()) {
+        console.log("print5")
         return true;
       }
+      console.log("print6")
       return false;
     }
   );
+  console.log("print7")
 
   const [latestLoadMoreCount, setLatestLoadMoreCount] = React.useState(1);
   const onLatestLoadMoreClick = (event) => {
