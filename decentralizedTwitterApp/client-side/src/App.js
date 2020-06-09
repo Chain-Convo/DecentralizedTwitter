@@ -384,7 +384,7 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  Categories
+                  CategoriesTE2
                 </div>
                 <div class="col-auto ml-auto">
                   {/* <button
@@ -1189,25 +1189,31 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
   React.useEffect(() => {
     getAllTweets().then((result) => {
       console.log("printing1.. ")
+      console.log("result: " + result)
       let receivedResult = result
       if (receivedResult.length > 0) {
         console.log("printing2...")
-        setAllTweets(receivedResult.reverse());
+        console.log("received result: " + receivedResult)
+        setAllTweets([...receivedResult].reverse());
+        console.log("printign3...")
+        console.log("all tweets: " + allTweets)
         
         //  Setting the list of trending tweets based on the number of likes
         setTrendingTweets(
-          allTweets.sort(function (a, b) {
+          [...allTweets].sort(function (a, b) {
             return parseInt(b[3]) - parseInt(a[3]);
           })
         );
+        console.log("printing4...")
+        console.log("trending tweets: " + trendingTweets)
         // console.log(allTweets.sort("likes"))
         // console.log(allTweets);
 
       }
-      console.log("printing3...")
+      console.log("printing5...")
 
     });
-  }, [allTweets]);
+  }, [allTweets, trendingTweets]);
 
   // if (allTweets.length > 0) {
 
