@@ -243,7 +243,7 @@ const App = () => {
   // console.log(searchValue)
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/main">
       <div className="App">
         <header>
           {/* <!-- navbar starts here --> */}
@@ -384,7 +384,7 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  Categories
+                  CategoriesHR
                 </div>
                 <div class="col-auto ml-auto">
                   {/* <button
