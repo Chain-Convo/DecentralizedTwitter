@@ -1188,17 +1188,24 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
 
   React.useEffect(() => {
     getAllTweets().then((result) => {
-      // console.log(result.reverse())
-      setAllTweets(result.reverse());
+      console.log("printing1.. ")
+      let receivedResult = result
+      if (receivedResult.length > 0) {
+        console.log("printing2...")
+        setAllTweets(receivedResult.reverse());
+        
+        //  Setting the list of trending tweets based on the number of likes
+        setTrendingTweets(
+          allTweets.sort(function (a, b) {
+            return parseInt(b[3]) - parseInt(a[3]);
+          })
+        );
+        // console.log(allTweets.sort("likes"))
+        // console.log(allTweets);
 
-      //  Setting the list of trending tweets based on the number of likes
-      setTrendingTweets(
-        allTweets.sort(function (a, b) {
-          return parseInt(b[3]) - parseInt(a[3]);
-        })
-      );
-      // console.log(allTweets.sort("likes"))
-      // console.log(allTweets);
+      }
+      console.log("printing3...")
+
     });
   }, [allTweets]);
 
