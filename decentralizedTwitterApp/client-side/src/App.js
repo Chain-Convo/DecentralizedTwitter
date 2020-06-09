@@ -16,6 +16,7 @@ import {
 } from "./scripts/tokenContractInteract";
 import {
   BrowserRouter,
+  HashRouter,
   Switch,
   Route,
   Redirect,
@@ -243,7 +244,7 @@ const App = () => {
   // console.log(searchValue)
 
   return (
-    <BrowserRouter basename="/main">
+    <HashRouter basename="/main">
       <div className="App">
         <header>
           {/* <!-- navbar starts here --> */}
@@ -384,7 +385,7 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  CategoriesHR
+                  CategoriesHR2
                 </div>
                 <div class="col-auto ml-auto">
                   {/* <button
@@ -522,7 +523,7 @@ const App = () => {
           </div>
         </footer>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
