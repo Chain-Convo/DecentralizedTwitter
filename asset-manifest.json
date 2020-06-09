@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/DecentralizedTwitter/static/css/main.5f361e03.chunk.css",
-    "main.js": "/DecentralizedTwitter/static/js/main.619a05a0.chunk.js",
-    "main.js.map": "/DecentralizedTwitter/static/js/main.619a05a0.chunk.js.map",
+    "main.js": "/DecentralizedTwitter/static/js/main.239612fc.chunk.js",
+    "main.js.map": "/DecentralizedTwitter/static/js/main.239612fc.chunk.js.map",
     "runtime-main.js": "/DecentralizedTwitter/static/js/runtime-main.0898d456.js",
     "runtime-main.js.map": "/DecentralizedTwitter/static/js/runtime-main.0898d456.js.map",
     "static/js/2.5943ecf6.chunk.js": "/DecentralizedTwitter/static/js/2.5943ecf6.chunk.js",
     "static/js/2.5943ecf6.chunk.js.map": "/DecentralizedTwitter/static/js/2.5943ecf6.chunk.js.map",
     "index.html": "/DecentralizedTwitter/index.html",
-    "precache-manifest.f9edfc6a4461f22fe519642526a66fa2.js": "/DecentralizedTwitter/precache-manifest.f9edfc6a4461f22fe519642526a66fa2.js",
+    "precache-manifest.275d9f799c6c88db5c5203541f8e9b3d.js": "/DecentralizedTwitter/precache-manifest.275d9f799c6c88db5c5203541f8e9b3d.js",
     "service-worker.js": "/DecentralizedTwitter/service-worker.js",
     "static/css/main.5f361e03.chunk.css.map": "/DecentralizedTwitter/static/css/main.5f361e03.chunk.css.map",
     "static/js/2.5943ecf6.chunk.js.LICENSE.txt": "/DecentralizedTwitter/static/js/2.5943ecf6.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.0898d456.js",
     "static/js/2.5943ecf6.chunk.js",
     "static/css/main.5f361e03.chunk.css",
-    "static/js/main.619a05a0.chunk.js"
+    "static/js/main.239612fc.chunk.js"
   ]
 }
