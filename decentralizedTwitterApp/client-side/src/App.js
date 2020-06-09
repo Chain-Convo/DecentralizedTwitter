@@ -244,7 +244,7 @@ const App = () => {
   // console.log(searchValue)
 
   return (
-    <HashRouter basename="/main">
+    <HashRouter >
       <div className="App">
         <header>
           {/* <!-- navbar starts here --> */}
@@ -385,7 +385,7 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  CategoriesHR2
+                  CategoriesHR3
                 </div>
                 <div class="col-auto ml-auto">
                   {/* <button
