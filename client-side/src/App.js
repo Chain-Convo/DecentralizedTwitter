@@ -586,7 +586,7 @@ const OwnerPage = (props) => {
       <div className="main mb-5">
         <div className="container">
           {/* <!-- Posts --> */}
-          <div className="column">
+          <div className="row">
             {/* <!-- Latest --> */}
             <div className="col-12 pl-lg-5 col-lg-6">
               <div className="raleway-semibold">User's Tokens</div>
@@ -693,12 +693,19 @@ const OwnerPage = (props) => {
 };
 
 const TokenPage = (props) => {
-  const tokenId = window.location.pathname.replace("/token/", "");
-  let owner, category, likes, dislikes, content;
+  // const tokenId = window.location.pathname.replace("/token/", "");
+  let owner, category, likes, dislikes, content, tokenId;
 
   //  remove this if condition to check the error
   if (props.location !== undefined) {
-    ({ owner, content, category, likes, dislikes } = props.location.state);
+    ({
+      owner,
+      content,
+      category,
+      likes,
+      dislikes,
+      tokenId,
+    } = props.location.state);
   }
   // console.log(tokenId);
   // console.log(category);
@@ -713,98 +720,113 @@ const TokenPage = (props) => {
   return (
     // <div>TODO: Token info here: token id = {tokenId}</div>
     true ? (
-      <div className="col-12 pl-lg-5 col-lg-6">
-        <div className="raleway-semibold">{"Token Info".toUpperCase()}</div>
-        <div className="row">
-          <div className="col-12 my-3" key={tokenId}>
-            <div className="tweet-details">
-              <div className="bg-black px-3 py-2">
-                <div className="owner-id">
-                  {" "}
-                  <span className="title theme-text">
-                    {"Tweet token details".toUpperCase()}
-                  </span>{" "}
-                  {/* <span className="p-id text-white">{owner}</span> */}
-                </div>
-                <div className="row justify-content-between">
-                  <div className="col-auto token-id">
-                    {/* <Link
-                    to={{
-                      pathname: `token/${value.id}`,
-                      state: {
-                        owner: value.owner,
-                        category: value.category,
-                        likes: value.likes,
-                        dislikes: value.dislikes,
-                      },
-                    }}
-                  > */}
-                    {/* <span className="title theme-text">Token ID:</span>{" "} */}
-                    {/* <span className="p-id text-white">{tokenId}</span> */}
-                    {/* </Link> */}
-                  </div>
-                  <div className="col-auto category">
-                    {/* <span className="title theme-text">Category:</span>{" "} */}
-                    {/* <span className="p-id text-white">{category}</span> */}
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white px-3">
-                <div className="desc pt-3 pb-2">
-                  Owner: {"    "}
-                  {owner}
-                </div>
-                <div className="desc pt-3 pb-2">
-                  TokenId: {"  "}
-                  {tokenId}
-                </div>
-                <div className="desc pt-3 pb-2">
-                  Tweet: {"    "}
-                  {content}
-                </div>
-                <div className="desc pt-3 pb-2">Category: {category}</div>
-                <div className="desc pt-3 pb-2">
-                  Likes: {"    "}
-                  {likes}
-                </div>
-                <div className="desc pt-3 pb-2">Dislikes: {dislikes}</div>
+      <div className="main mb-5">
+        <div className="container">
+          {/* <!-- Posts --> */}
+          <div
+            className="row"
+            style={{
+              marginLeft: "200px",
+              marginRight: "-200px",
+            }}
+          >
+            {/* <!-- Latest --> */}
+            <div className="col-12 pl-lg-5 col-lg-6">
+              <div className="raleway-semibold">User's Token Info</div>
+              <div className="row">
+                <div className="col-12 my-3">
+                  <div className="tweet-details">
+                    <div className="bg-black px-3 py-2">
+                      <div className="owner-id">
+                        {" "}
+                        <span className="title theme-text">
+                          Token Details
+                        </span>{" "}
+                        {/* <span className="p-id text-white">
+                                  {value.owner}
+                                </span> */}
+                      </div>
+                      {/* <div className="row justify-content-between">
+                                <div className="col-auto token-id">
+                                  <Link
+                                    to={{
+                                      pathname: `/token/${value.id}`,
+                                      state: {
+                                        owner: value.owner,
+                                        content: value.content,
+                                        category: value.category,
+                                        likes: value.likes,
+                                        dislikes: value.dislikes,
+                                      },
+                                    }}
+                                  >
+                                    <span className="title theme-text">
+                                      Token ID:
+                                    </span>{" "}
+                                    <span className="p-id text-white">
+                                      {value.id}
+                                    </span>
+                                  </Link>
+                                </div>
+                                <div className="col-auto category">
+                                  <span className="title theme-text">
+                                    Category:
+                                  </span>{" "}
+                                  <span className="p-id text-white">
+                                    {value.category}
+                                  </span>
+                                </div>
+                              </div> */}
+                    </div>
+                    <div className="bg-white px-3">
+                      <div className="desc pt-3 pb-2">Owner: {owner}</div>
+                      <div className="desc pt-3 pb-2">Token Id: {tokenId}</div>
+                      <div className="desc pt-3 pb-2">Content: {content}</div>
+                      <div className="desc pt-3 pb-2">Likes: {likes}</div>
+                      <div className="desc pt-3 pb-2">Dislikes: {dislikes}</div>
 
-                <div className="text-right">
-                  {/* <span className="like px-1">
-                  <button
-                    key={tokenId}
-                    className="btn border-0"
-                    // onClick={(event) => {
-                    //   onLikeClick(event, value.id);
-                    // }}
-                  >
-                    <img src="./assets/img/like.png" alt="like_img" />
-                  </button>
-                  <span className="count px-1">{likes}</span>
-                </span> */}
-                  {/* <span className="unLike px-1">
-                  <button
-                    key={tokenId}
-                    className="btn border-0"
-                    // onClick={(event) => {
-                    //   onDislikeClick(event, value.id);
-                    // }}
-                  >
-                    <img src="./assets//img/unlike.png" alt="unlike_img" />
-                  </button>
-                  <span className="count px-1">{dislikes}</span>
-                </span> */}
-                  {/* <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${tokenId}`}
-                >
-                  
-                  <span className="opensea pl-3">
-                    <img src="./assets/img/open-sea.svg" alt="open_sea_img" />
-                  </span>
-                </a> */}
+                      <div className="text-right">
+                        {/* <span className="like px-1">
+                          <span className="count px-1">Likes: {likes}</span>
+                        </span>
+                        <span className="unLike px-1">
+                          <span className="count px-1">
+                            Dislikes: {dislikes}
+                          </span>
+                        </span> */}
+                        {/* <a
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                                >
+                                  <span className="opensea pl-3">
+                                    {" "}
+                                    OpenSea Link
+                                  </span>
+                                </a> */}
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
+                {/* {filteredLatestCategories.length > 0 &&
+                  filteredLatestCategories.map((value, index) => {
+                    if (index < latestLoadMoreCount * 5) {
+                      return (
+                        );
+                    }
+                  })} */}
+
+                {/* <div className="col-12 text-center mt-5">
+                  <button
+                    className="btn text-white bg-black"
+                    onClick={(event) => {
+                      onLatestLoadMoreClick(event);
+                    }}
+                  >
+                    Load More
+                  </button>
+                </div> */}
               </div>
             </div>
           </div>
@@ -1233,6 +1255,7 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                                       category: value.category,
                                       likes: value.likes,
                                       dislikes: value.dislikes,
+                                      tokenId: value.id,
                                     },
                                   }}
                                 >
@@ -1545,6 +1568,7 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                                       category: value.category,
                                       likes: value.likes,
                                       dislikes: value.dislikes,
+                                      tokenId: value.id,
                                     },
                                   }}
                                 >
