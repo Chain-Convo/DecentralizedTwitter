@@ -507,11 +507,11 @@ const App = () => {
 
         {/* <!-- MAIN SECTION --> */}
         <Switch>
-          <Route path="/token/:id" component={TokenPage}>
+          <Route exact path="/token/:id" component={TokenPage}>
             {/* <TokenPage></TokenPage> */}
           </Route>
-          <Route path="/owner/:address" component={OwnerPage}></Route>
-          <Route path="/">
+          <Route exact path="/owner/:address" component={OwnerPage}></Route>
+          <Route exact path="/">
             <Homepage
               filtersList={filters}
               searchValue={searchValue}
@@ -633,6 +633,7 @@ const OwnerPage = (props) => {
                                         category: value.category,
                                         likes: value.likes,
                                         dislikes: value.dislikes,
+                                        tokenId: value.id,
                                       },
                                     }}
                                   >
