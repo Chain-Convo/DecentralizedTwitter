@@ -388,7 +388,7 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  Categories
+                  CategoriesFT1
                 </div>
                 <div className="col-auto ml-auto">
                   {/* <button
@@ -586,7 +586,7 @@ const OwnerPage = (props) => {
       <div className="main mb-5">
         <div className="container">
           {/* <!-- Posts --> */}
-          <div className="row">
+          <div className="column">
             {/* <!-- Latest --> */}
             <div className="col-12 pl-lg-5 col-lg-6">
               <div className="raleway-semibold">User's Tokens</div>
@@ -1022,18 +1022,33 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
   React.useEffect(() => {
     getAllTweets().then((result) => {
       // console.log(result.reverse())
-      setAllTweets(result.reverse());
+      console.log("printing1.. ");
+      console.log("result: " + result);
 
-      //  Setting the list of trending tweets based on the number of likes
-      setTrendingTweets(
-        allTweets.sort(function (a, b) {
-          return parseInt(b[3]) - parseInt(a[3]);
-        })
-      );
-      // console.log(allTweets.sort("likes"))
-      // console.log(allTweets);
+      let receivedResult = result;
+      if (receivedResult.length > 0) {
+        console.log("printing2...");
+        console.log("received result: " + receivedResult);
+
+        setAllTweets([...receivedResult].reverse());
+
+        console.log("printign3...");
+        console.log("all tweets: " + allTweets);
+
+        //  Setting the list of trending tweets based on the number of likes
+        setTrendingTweets(
+          [...allTweets].sort(function (a, b) {
+            return parseInt(b[3]) - parseInt(a[3]);
+          })
+        );
+        console.log("printing4...");
+        console.log("trending tweets: " + trendingTweets);
+        // console.log(allTweets.sort("likes"))
+        // console.log(allTweets);
+      }
+      console.log("printing5...");
     });
-  }, [allTweets]);
+  }, [allTweets, trendingTweets]);
 
   // if (allTweets.length > 0) {
 
