@@ -24,7 +24,10 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
 // const TokenPage = React.lazy(() => {
 //   return import("./container/TokenPage/TokenPage");
@@ -388,7 +391,7 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  CategoriesFT1
+                  CategoriesFT3
                 </div>
                 <div className="col-auto ml-auto">
                   {/* <button
@@ -545,7 +548,18 @@ function FilterCategoryButton({ children, isActive, onClick, filterName }) {
   );
 }
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height: 140,
+    width: 100,
+  },
+}));
+
 const OwnerPage = (props) => {
+  const classes = useStyles();
   const address = window.location.pathname.replace("/owner/", "");
   let owner, tokenList;
 
@@ -586,15 +600,16 @@ const OwnerPage = (props) => {
       <div className="main mb-5">
         <div className="container">
           {/* <!-- Posts --> */}
+          <div className="raleway-semibold">User's Tokens</div>
           <div className="row">
             {/* <!-- Latest --> */}
-            <div className="col-12 pl-lg-5 col-lg-6">
-              <div className="raleway-semibold">User's Tokens</div>
-              <div className="row">
-                {filteredLatestCategories.length > 0 &&
-                  filteredLatestCategories.map((value, index) => {
-                    if (index < latestLoadMoreCount * 5) {
-                      return (
+            {filteredLatestCategories.length > 0 &&
+              filteredLatestCategories.map((value, index) => {
+                if (index < latestLoadMoreCount * 5) {
+                  return index%2 == 0 ? 
+                    <div className="col-12 pr-lg-5 col-lg-6">
+                      {/* <div className="raleway-semibold">User's Tokens</div> */}
+                      <div className="row">
                         <div className="col-12 my-3" key={index}>
                           <div className="tweet-details">
                             <div className="bg-black px-3 py-2">
@@ -669,21 +684,98 @@ const OwnerPage = (props) => {
                             </div>
                           </div>
                         </div>
-                      );
-                    }
-                  })}
+                      </div>
+                    </div> : <div className="col-12 pl-lg-5 col-lg-6">
+                      {/* <div className="raleway-semibold">User's Tokens</div> */}
+                      <div className="row">
+                        <div className="col-12 my-3" key={index}>
+                          <div className="tweet-details">
+                            <div className="bg-black px-3 py-2">
+                              <div className="owner-id">
+                                {" "}
+                                <span className="title theme-text">
+                                  Owner:
+                                </span>{" "}
+                                <span className="p-id text-white">
+                                  {value.owner}
+                                </span>
+                              </div>
+                              <div className="row justify-content-between">
+                                <div className="col-auto token-id">
+                                  <Link
+                                    to={{
+                                      pathname: `/token/${value.id}`,
+                                      state: {
+                                        owner: value.owner,
+                                        content: value.content,
+                                        category: value.category,
+                                        likes: value.likes,
+                                        dislikes: value.dislikes,
+                                      },
+                                    }}
+                                  >
+                                    <span className="title theme-text">
+                                      Token ID:
+                                    </span>{" "}
+                                    <span className="p-id text-white">
+                                      {value.id}
+                                    </span>
+                                  </Link>
+                                </div>
+                                <div className="col-auto category">
+                                  <span className="title theme-text">
+                                    Category:
+                                  </span>{" "}
+                                  <span className="p-id text-white">
+                                    {value.category}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="bg-white px-3">
+                              <div className="desc pt-3 pb-2">
+                                {value.content}
+                              </div>
 
-                <div className="col-12 text-center mt-5">
-                  <button
-                    className="btn text-white bg-black"
-                    onClick={(event) => {
-                      onLatestLoadMoreClick(event);
-                    }}
-                  >
-                    Load More
-                  </button>
-                </div>
-              </div>
+                              <div className="text-right">
+                                <span className="like px-1">
+                                  <span className="count px-1">
+                                    Likes: {value.likes}
+                                  </span>
+                                </span>
+                                <span className="unLike px-1">
+                                  <span className="count px-1">
+                                    Dislikes: {value.dislikes}
+                                  </span>
+                                </span>
+                                <a
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                                >
+                                  <span className="opensea pl-3">
+                                    {" "}
+                                    OpenSea Link
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                } 
+              })}
+
+            <div className="col-12 text-center mt-5">
+              <button
+                className="btn text-white bg-black"
+                onClick={(event) => {
+                  onLatestLoadMoreClick(event);
+                }}
+              >
+                Load More
+              </button>
             </div>
           </div>
         </div>
