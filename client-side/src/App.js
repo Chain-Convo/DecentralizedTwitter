@@ -391,7 +391,7 @@ const App = () => {
                       alt=""
                     />
                   </i>
-                  CategoriesFT3
+                  Categories
                 </div>
                 <div className="col-auto ml-auto">
                   {/* <button
@@ -606,7 +606,7 @@ const OwnerPage = (props) => {
             {filteredLatestCategories.length > 0 &&
               filteredLatestCategories.map((value, index) => {
                 if (index < latestLoadMoreCount * 5) {
-                  return index%2 == 0 ? 
+                  return index % 2 == 0 ? (
                     <div className="col-12 pr-lg-5 col-lg-6">
                       {/* <div className="raleway-semibold">User's Tokens</div> */}
                       <div className="row">
@@ -675,9 +675,15 @@ const OwnerPage = (props) => {
                                   rel="noopener noreferrer"
                                   href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
                                 >
-                                  <span className="opensea pl-3">
+                                  {/* <span className="opensea pl-3">
                                     {" "}
                                     OpenSea Link
+                                  </span> */}
+                                  <span className="opensea pl-3">
+                                    <img
+                                      src="./assets/img/open-sea.svg"
+                                      alt="open_sea_img"
+                                    />
                                   </span>
                                 </a>
                               </div>
@@ -685,7 +691,9 @@ const OwnerPage = (props) => {
                           </div>
                         </div>
                       </div>
-                    </div> : <div className="col-12 pl-lg-5 col-lg-6">
+                    </div>
+                  ) : (
+                    <div className="col-12 pl-lg-5 col-lg-6">
                       {/* <div className="raleway-semibold">User's Tokens</div> */}
                       <div className="row">
                         <div className="col-12 my-3" key={index}>
@@ -753,10 +761,14 @@ const OwnerPage = (props) => {
                                   rel="noopener noreferrer"
                                   href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
                                 >
-                                  <span className="opensea pl-3">
+                                  {/* <span className="opensea pl-3">
                                     {" "}
                                     OpenSea Link
-                                  </span>
+                                  </span> */}
+                                  <img
+                                    src="./assets/img/open-sea.svg"
+                                    alt="open_sea_img"
+                                  />
                                 </a>
                               </div>
                             </div>
@@ -764,7 +776,8 @@ const OwnerPage = (props) => {
                         </div>
                       </div>
                     </div>
-                } 
+                  );
+                }
               })}
 
             <div className="col-12 text-center mt-5">
