@@ -661,7 +661,7 @@ const OwnerPage = (props) => {
   filteredLatestCategories = filteredLatestCategories.filter(
     (filteredLatestCategory) => {
       // console.log("print4")
-      if (filteredLatestCategory.owner.toLowerCase() == owner.toLowerCase()) {
+      if (filteredLatestCategory.owner.toLowerCase().toString() === owner.toLowerCase().toString()) {
         // console.log("print5")
         return true;
       }
@@ -694,7 +694,7 @@ const OwnerPage = (props) => {
             {filteredLatestCategories.length > 0 &&
               filteredLatestCategories.map((value, index) => {
                 if (index < latestLoadMoreCount * 5) {
-                  return index % 2 == 0 ? (
+                  return index % 2 === 0 ? (
                     <div className="col-12 pr-lg-5 col-lg-6" key={index}>
                       {/* <div className="raleway-semibold">User's Tokens</div> */}
                       <div className="row">
@@ -868,6 +868,7 @@ const OwnerPage = (props) => {
                     </div>
                   );
                 }
+                return null
               })}
 
             <div className="col-12 text-center mt-5">
@@ -1871,6 +1872,7 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                       </div>
                     );
                   }
+                  return null
                 })}
 
               <div className="col-12 text-center mt-5">
