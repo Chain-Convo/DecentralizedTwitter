@@ -210,7 +210,8 @@ const App = () => {
     sports: false,
   });
 
-  const onClick = (filterName) => {
+  const onClick = (event, filterName) => {
+    event.preventDefault()
     // console.log(filterName)
     // console.log({...filters, [filterName]: !filters[filterName]})
     // alert("clicked category: " + filterName)
@@ -253,7 +254,7 @@ const App = () => {
           {/* <!-- navbar starts here --> */}
           <nav className="navbar navbar-expand-lg navbar-light bg-white py-1">
             <div className="container">
-              <a className="navbar-brand" href="#">
+              <a className="navbar-brand" href="/#">
                 <span className="tag-line">
                   <img src="./assets/img/logo_svg.svg" width="50" alt="" />{" "}
                   ChainConvo Tweet Currency Exchange
@@ -302,7 +303,7 @@ const App = () => {
                   <li className="nav-item dropdown d-lg-none">
                     <a
                       className="nav-link dropdown-toggle"
-                      href="#"
+                      href="/#"
                       id="navbarDropdown"
                       role="button"
                       data-toggle="dropdown"
@@ -398,7 +399,7 @@ const App = () => {
 
                   <li className="nav-item active">
                     <span className="social-links">
-                      <a className="nav-link" href="#">
+                      <a className="nav-link" href="/#">
                         <img
                           src="./assets/img/twitter_logo.svg"
                           width="30"
@@ -408,7 +409,7 @@ const App = () => {
                     </span>
 
                     <span className="social-links pl-3">
-                      <a className="nav-link" href="#">
+                      <a className="nav-link" href="/#">
                         <img
                           src="./assets/img/discord_logo.svg"
                           width="30"
@@ -583,10 +584,10 @@ function FilterCategoryAnchor({ children, isActive, onClick, filterName }) {
   return (
     <a
       className="dropdown-item"
-      onClick={() => {
-        onClick(filterName);
+      href="/#"
+      onClick={(event) => {
+        onClick(event, filterName);
       }}
-      href="javascript:void(0)"
     >
       {children}
     </a>
@@ -599,8 +600,8 @@ function FilterCategoryButton({ children, isActive, onClick, filterName }) {
   return (
     <Button
       className="btn p-0 border-0"
-      onClick={() => {
-        onClick(filterName);
+      onClick={(event) => {
+        onClick(event, filterName);
       }}
     >
       {children}
@@ -694,7 +695,7 @@ const OwnerPage = (props) => {
               filteredLatestCategories.map((value, index) => {
                 if (index < latestLoadMoreCount * 5) {
                   return index % 2 == 0 ? (
-                    <div className="col-12 pr-lg-5 col-lg-6">
+                    <div className="col-12 pr-lg-5 col-lg-6" key={index}>
                       {/* <div className="raleway-semibold">User's Tokens</div> */}
                       <div className="row">
                         <div className="col-12 my-3" key={index}>
@@ -781,7 +782,7 @@ const OwnerPage = (props) => {
                       </div>
                     </div>
                   ) : (
-                    <div className="col-12 pl-lg-5 col-lg-6">
+                    <div className="col-12 pl-lg-5 col-lg-6" key={index}>
                       {/* <div className="raleway-semibold">User's Tokens</div> */}
                       <div className="row">
                         <div className="col-12 my-3" key={index}>
@@ -1391,8 +1392,19 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                     onSelectCategory(event);
                   }}
                 >
-                  <option selected>Choose...</option>
+                  {/* <option selected>Choose...</option>
                   <option>General</option>
+                  <option>Cryptocurrency</option>
+                  <option>NFT</option>
+                  <option>Arts</option>
+                  <option>Games</option>
+                  <option>Science</option>
+                  <option>Technology</option>
+                  <option>Politics</option>
+                  <option>Society</option>
+                  <option>Sports</option> */}
+                  <option defaultValue>Choose...</option>
+                  <option >General</option>
                   <option>Cryptocurrency</option>
                   <option>NFT</option>
                   <option>Arts</option>
@@ -1428,7 +1440,7 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                 filteredTrendingCategories.map((value, index) => {
                   if (index < trendingLoadMoreCount * 5) {
                     return (
-                      <div className="col-12 my-3">
+                      <div className="col-12 my-3" key={index}>
                         <div className="tweet-details">
                           <div className="bg-black px-3 py-2">
                             <div className="owner-id">
@@ -1541,7 +1553,9 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                       </div>
                     );
                   }
-                })}
+                  return null
+                }
+                )}
               {/* <div class="col-12 my-3">
                   <div class="tweet-details">
                     <div class="bg-black px-3 py-2">
