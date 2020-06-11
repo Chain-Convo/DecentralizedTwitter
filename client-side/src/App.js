@@ -510,7 +510,12 @@ const App = () => {
           <Route exact path="/token/:id" component={TokenPage}>
             {/* <TokenPage></TokenPage> */}
           </Route>
-          <Route exact path="/owner/:address" component={OwnerPage}></Route>
+          {/* <Route exact path="/owner/:address" component={OwnerPage}></Route> */}
+          <Route
+            exact
+            path="/owner/:address"
+            render={(props) => <OwnerPage {...props}></OwnerPage>}
+          ></Route>
           <Route exact path="/">
             <Homepage
               filtersList={filters}
@@ -559,18 +564,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const OwnerPage = (props) => {
+  const location = useLocation();
+  console.log("line 564..");
+  console.log(location.state);
+  console.log("line 566..");
   const classes = useStyles();
   const address = window.location.pathname.replace("/owner/", "");
   let owner, tokenList;
 
   if (props.location !== undefined) {
+    // if (props.location.state !== undefined) {
     ({ owner, tokenList } = props.location.state);
+    // }
   }
+  // const [myOwner, setOwner] = React.useState(owner);
+  // const [myTokenList, setTokenList] = React.useState(tokenList);
+
+  // React.useEffect(() => {
+  //   const data = localStorage.getItem("myOwner");
+  //   if (data) {
+  //     setOwner(JSON.parse(data));
+  //   }
+  //   const tokenListData = localStorage.getItem("myTokenList");
+  //   if (tokenListData) {
+  //     setTokenList(JSON.parse(tokenListData));
+  //   }
+  // }, []);
+
+  // React.useEffect(() => {
+  //   localStorage.setItem("myOwner", JSON.stringify(owner));
+  //   localStorage.setItem("myTokenList", JSON.stringify(tokenList));
+  // });
+
   console.log("print1: " + owner);
   console.log("print2: " + tokenList);
 
   let filteredLatestCategories = tokenList;
   // console.log("print3: " + filteredLatestCategories)
+  // if (filteredLatestCategories !== undefined) {
   filteredLatestCategories = filteredLatestCategories.filter(
     (filteredLatestCategory) => {
       // console.log("print4")
@@ -582,6 +613,7 @@ const OwnerPage = (props) => {
       return false;
     }
   );
+  // }
   console.log("print7");
   console.log("print8: " + filteredLatestCategories);
 
@@ -720,6 +752,7 @@ const OwnerPage = (props) => {
                                         category: value.category,
                                         likes: value.likes,
                                         dislikes: value.dislikes,
+                                        tokenId: value.id,
                                       },
                                     }}
                                   >
@@ -831,13 +864,18 @@ const TokenPage = (props) => {
           {/* <!-- Posts --> */}
           <div
             className="row"
-            style={{
-              marginLeft: "200px",
-              marginRight: "-200px",
-            }}
+            // style={{
+            //   marginLeft: "200px",
+            //   marginRight: "-200px",
+            // }}
           >
             {/* <!-- Latest --> */}
-            <div className="col-12 pl-lg-5 col-lg-6">
+            <div
+              className="col-12 pl-lg-5 col-lg-6"
+              style={{
+                marginLeft: "23%",
+              }}
+            >
               <div className="raleway-semibold">User's Token Info</div>
               <div className="row">
                 <div className="col-12 my-3">
@@ -1150,18 +1188,18 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
   React.useEffect(() => {
     getAllTweets().then((result) => {
       // console.log(result.reverse())
-      console.log("printing1.. ");
-      console.log("result: " + result);
+      // console.log("printing1.. ");
+      // console.log("result: " + result);
 
       let receivedResult = result;
       if (receivedResult.length > 0) {
-        console.log("printing2...");
-        console.log("received result: " + receivedResult);
+        // console.log("printing2...");
+        // console.log("received result: " + receivedResult);
 
         setAllTweets([...receivedResult].reverse());
 
-        console.log("printign3...");
-        console.log("all tweets: " + allTweets);
+        // console.log("printign3...");
+        // console.log("all tweets: " + allTweets);
 
         //  Setting the list of trending tweets based on the number of likes
         setTrendingTweets(
@@ -1169,12 +1207,12 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
             return parseInt(b[3]) - parseInt(a[3]);
           })
         );
-        console.log("printing4...");
-        console.log("trending tweets: " + trendingTweets);
+        // console.log("printing4...");
+        // console.log("trending tweets: " + trendingTweets);
         // console.log(allTweets.sort("likes"))
         // console.log(allTweets);
       }
-      console.log("printing5...");
+      // console.log("printing5...");
     });
   }, [allTweets, trendingTweets]);
 
