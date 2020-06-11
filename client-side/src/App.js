@@ -299,9 +299,9 @@ const App = () => {
                 <div className="dropdown-divider"></div>
 
                 <ul className="navbar-nav ml-auto">
-                  {/* <li class="nav-item dropdown d-lg-none">
+                  <li className="nav-item dropdown d-lg-none">
                     <a
-                      class="nav-link dropdown-toggle"
+                      className="nav-link dropdown-toggle"
                       href="#"
                       id="navbarDropdown"
                       role="button"
@@ -309,7 +309,7 @@ const App = () => {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Categories21
+                      Categories
                       <i>
                         <img
                           src="./assets/img/expand_more-24px.svg"
@@ -319,39 +319,80 @@ const App = () => {
                       </i>
                     </a>
 
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <FilterCategoryAnchor
+                        isActive={filters.general}
+                        onClick={onClick}
+                        filterName="general"
+                      >
                         General
-                      </a>
-                      <a class="dropdown-item" href="#">
+                      </FilterCategoryAnchor>
+                      <FilterCategoryAnchor
+                        isActive={filters.cryptocurrency}
+                        onClick={onClick}
+                        filterName="cryptocurrency"
+                      >
                         Cryptocurrency
-                      </a>
-                      <a class="dropdown-item" href="#">
+                      </FilterCategoryAnchor>
+                      <FilterCategoryAnchor
+                        isActive={filters.nft}
+                        onClick={onClick}
+                        filterName="nft"
+                      >
                         NFT
-                      </a>
-                      <a class="dropdown-item" href="#">
+                      </FilterCategoryAnchor>
+                      <FilterCategoryAnchor
+                        isActive={filters.arts}
+                        onClick={onClick}
+                        filterName="arts"
+                      >
                         Arts
-                      </a>
-                      <a class="dropdown-item" href="#">
+                      </FilterCategoryAnchor>
+                      <FilterCategoryAnchor
+                        isActive={filters.games}
+                        onClick={onClick}
+                        filterName="games"
+                      >
                         Games
-                      </a>
-                      <a class="dropdown-item" href="#">
+                      </FilterCategoryAnchor>
+                      <FilterCategoryAnchor
+                        isActive={filters.science}
+                        onClick={onClick}
+                        filterName="science"
+                      >
                         Science
-                      </a>
-                      <a class="dropdown-item" href="#">
+                      </FilterCategoryAnchor>
+                      <FilterCategoryAnchor
+                        isActive={filters.technology}
+                        onClick={onClick}
+                        filterName="technology"
+                      >
                         Technology
-                      </a>
-                      <a class="dropdown-item" href="#">
+                      </FilterCategoryAnchor>
+                      <FilterCategoryAnchor
+                        isActive={filters.politics}
+                        onClick={onClick}
+                        filterName="politics"
+                      >
                         Politics
-                      </a>
-                      <a class="dropdown-item" href="#">
+                      </FilterCategoryAnchor>
+                      <FilterCategoryAnchor
+                        isActive={filters.society}
+                        onClick={onClick}
+                        filterName="society"
+                      >
                         Society
-                      </a>
-                      <a class="dropdown-item" href="#">
+                      </FilterCategoryAnchor>
+                      <FilterCategoryAnchor
+                        isActive={filters.sports}
+                        onClick={onClick}
+                        filterName="sports"
+                      >
                         Sports
-                      </a>
+                      </FilterCategoryAnchor>
+                      
                     </div>
-                  </li> */}
+                  </li>
 
                   <div className="dropdown-divider"></div>
 
@@ -537,6 +578,20 @@ const App = () => {
     </HashRouter>
   );
 };
+
+function FilterCategoryAnchor({ children, isActive, onClick, filterName }) {
+  return (
+    <a
+      className="dropdown-item"
+      onClick={() => {
+        onClick(filterName);
+      }}
+      href="javascript:void(0)"
+    >
+      {children}
+    </a>
+  );
+}
 
 function FilterCategoryButton({ children, isActive, onClick, filterName }) {
   // console.log("printing category filter");
@@ -873,7 +928,7 @@ const TokenPage = (props) => {
             <div
               className="col-12 pl-lg-5 col-lg-6"
               style={{
-                marginLeft: "23%",
+                margin: "auto",
               }}
             >
               <div className="raleway-semibold">User's Token Info</div>
