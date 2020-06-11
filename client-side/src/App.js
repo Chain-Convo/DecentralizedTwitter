@@ -1241,11 +1241,12 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
   // };
 
   React.useEffect(() => {
+    let mounted = true  //  For cancelling all the promises calls after getting work done
     getAllTweets().then((result) => {
       // console.log(result.reverse())
       // console.log("printing1.. ");
       // console.log("result: " + result);
-
+      if (mounted) {
       let receivedResult = result;
       if (receivedResult.length > 0) {
         // console.log("printing2...");
@@ -1268,7 +1269,11 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
         // console.log(allTweets);
       }
       // console.log("printing5...");
+    }
     });
+
+    return  () => mounted = false;
+
   }, [allTweets, trendingTweets]);
 
   // if (allTweets.length > 0) {
