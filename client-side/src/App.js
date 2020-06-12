@@ -10,24 +10,24 @@ import {
   getAllTweets,
   likeTweet,
   dislikeTweet,
-  getTweetInfo,
+  // getTweetInfo,
   getFeesToCreate,
   getFeesToLike,
 } from "./scripts/tokenContractInteract";
 import {
-  BrowserRouter,
+  // BrowserRouter,
   HashRouter,
   Switch,
   Route,
-  Redirect,
+  // Redirect,
   Link,
-  useHistory,
+  // useHistory,
   useLocation,
 } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+// import Grid from "@material-ui/core/Grid";
+// import Paper from "@material-ui/core/Paper";
 
 // const TokenPage = React.lazy(() => {
 //   return import("./container/TokenPage/TokenPage");
@@ -609,23 +609,23 @@ function FilterCategoryButton({ children, isActive, onClick, filterName }) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    height: 140,
-    width: 100,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+//   paper: {
+//     height: 140,
+//     width: 100,
+//   },
+// }));
 
 const OwnerPage = (props) => {
   const location = useLocation();
   console.log("line 564..");
   console.log(location.state);
   console.log("line 566..");
-  const classes = useStyles();
-  const address = window.location.pathname.replace("/owner/", "");
+  // const classes = useStyles();
+  // const address = window.location.pathname.replace("/owner/", "");
   let owner, tokenList;
 
   if (props.location !== undefined) {
@@ -985,6 +985,7 @@ const TokenPage = (props) => {
                       <div className="desc pt-3 pb-2">Content: {content}</div>
                       <div className="desc pt-3 pb-2">Likes: {likes}</div>
                       <div className="desc pt-3 pb-2">Dislikes: {dislikes}</div>
+                      {false && <div className="desc pt-3 pb-2">Category: {category}</div>}
 
                       <div className="text-right">
                         {/* <span className="like px-1">
@@ -1318,6 +1319,9 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
         // console.log("app.js function printing.....")
         // console.log(res)
         setTokenId(res.toString());
+        if (!tokenId) {
+          console.log(tokenId)
+        }
       });
 
       // console.log(id)
