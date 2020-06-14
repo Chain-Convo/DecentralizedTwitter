@@ -1,54 +1,20 @@
 import React from "react";
-// import logo from "./logo.svg";
 import "./App.css";
-// import getWeb3 from "./scripts/getWeb3"
 import Web3 from "web3";
-// import TokenContract from "./contracts/tokenContractInfo.json";
 import tokenContractInstance from "./scripts/tokenContractInstance";
 import {
   publishTweet,
   getAllTweets,
   likeTweet,
   dislikeTweet,
-  // getTweetInfo,
   getFeesToCreate,
   getFeesToLike,
 } from "./scripts/tokenContractInteract";
-import {
-  // BrowserRouter,
-  HashRouter,
-  Switch,
-  Route,
-  // Redirect,
-  Link,
-  // useHistory,
-  useLocation,
-} from "react-router-dom";
-// import { makeStyles } from "@material-ui/core/styles";
+import { HashRouter, Switch, Route, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-// import Grid from "@material-ui/core/Grid";
-// import Paper from "@material-ui/core/Paper";
-
-// const TokenPage = React.lazy(() => {
-//   return import("./container/TokenPage/TokenPage");
-// });
-// function App() {
-
-// function useQuery() {
-//   return new URLSearchParams(useLocation().search);
-// }
 
 const App = () => {
-  // let location = useLocation()
-  // console.log(location)
-  // React States to set the tweet msg, category, token Id, address
-  // const [allTweets, setAllTweets] = React.useState([]);
-  // const [trendingTweets, setTrendingTweets] = React.useState([]);
-  // const [tweetMsg, setTweetMsg] = React.useState("");
-  // const [tweetMsgCategory, setTweetMsgCategory] = React.useState("");
-  // const [tokenId, setTokenId] = React.useState("");
-  // const [latestLoadMoreCount, setLatestLoadMoreCount] = React.useState(1);
-  // const [trendingLoadMoreCount, setTrendingLoadMoreCount] = React.useState(1);
+  // Variable/React States to store the feesToCreate and feesToLike for a tweet
   const [feesToCreate, setFeesToCreate] = React.useState("");
   const [feesToLike, setFeesToLike] = React.useState("");
 
@@ -64,7 +30,6 @@ const App = () => {
         //  Setting the from account for the token contract to perform the 'Token' Contract transactions..
         tokenContractInstance.options.from = accounts[0];
       } catch (error) {
-        // dispatch(loginMetaMaskFail());
         console.log(error);
       }
     }
@@ -73,17 +38,13 @@ const App = () => {
 
   React.useEffect(() => {
     try {
+      //  Getting the FeesToCreate from the smart contract on load of webpage
       getFeesToCreate().then((result) => {
-        // console.log("printing in app.js file..")
-        // console.log(result)
-        // console.log("value: " + "0x" + Number(result).toString(16))
-        setFeesToCreate("0x" + Number(result).toString(16));
+        setFeesToCreate("0x" + Number(result).toString(16)); //  Converting the value in hex so that small value like 0.001 can be passed to smart contract
       });
 
+      //  Getting the FeesToLike from the smart contract on load of webpage
       getFeesToLike().then((result) => {
-        // console.log("printing in app.js file..")
-        // console.log(result)
-        // console.log("like value: " + Number(result).toString(16))
         setFeesToLike("0x" + Number(result).toString(16));
       });
     } catch (error) {
@@ -91,112 +52,7 @@ const App = () => {
     }
   }, []);
 
-  // console.log(feesToCreate)
-  // console.log(feesToLike)
-
-  // React.useEffect(() => {
-  //   getAllTweets().then((result) => {
-  //     // console.log(result.reverse())
-  //     setAllTweets(result.reverse());
-
-  //     //  Setting the list of trending tweets based on the number of likes
-  //     setTrendingTweets(
-  //       allTweets.sort(function (a, b) {
-  //         return parseInt(b[3]) - parseInt(a[3]);
-  //       })
-  //     );
-  //     // console.log(allTweets.sort("likes"))
-  //     // console.log(allTweets);
-  //   });
-  // }, [allTweets]);
-
-  // // if (allTweets.length > 0) {
-
-  // //   console.log("printing: ", allTweets[11].id);
-  // // }
-
-  // // Set Tweet Message
-  // const onChangeTweetMsg = (event) => {
-  //   event.preventDefault();
-  //   if (event.target.value != null) {
-  //     setTweetMsg(event.target.value);
-  //   }
-  // };
-
-  // // Set Tweet Message Category
-  // const onSelectCategory = (event) => {
-  //   event.preventDefault();
-  //   if (event.target.value != null) {
-  //     console.log(event.target.value);
-  //     setTweetMsgCategory(event.target.value);
-  //   }
-  // };
-
-  // const onPublishClick = async (event) => {
-  //   event.preventDefault();
-  //   console.log("ffef: ", tweetMsgCategory);
-  //   // console.log(tokenContractInstance.options.from)
-
-  //   if (
-  //     tweetMsg !== "" &&
-  //     tweetMsgCategory !== "" &&
-  //     tweetMsgCategory !== "Choose..."
-  //   ) {
-  //     await publishTweet(tweetMsg.toString(), tweetMsgCategory.toString()).then(
-  //       (res) => {
-  //         // console.log("app.js function printing.....")
-  //         // console.log(res)
-  //         setTokenId(res.toString());
-  //       }
-  //     );
-
-  //     // console.log(id)
-  //     // alert("Tweet message entered: " + tweetMsg + " with category: " + tweetMsgCategory);
-  //   }
-  // };
-  // // console.log("txn. done.. Token Id: " , tokenId)
-  // const onLikeClick = async (event, tokenId) => {
-  //   event.preventDefault();
-  //   console.log("clicked like button");
-  //   console.log(tokenId);
-  //   await likeTweet(Number(tokenId)).then((result) => {
-  //     console.log("app.js function printing");
-  //     console.log(result);
-  //   });
-  // };
-
-  // const onDislikeClick = async (event, tokenId) => {
-  //   event.preventDefault();
-  //   console.log("clicked like button");
-  //   console.log(tokenId);
-  //   await dislikeTweet(Number(tokenId)).then((result) => {
-  //     console.log("app.js function printing");
-  //     console.log(result);
-  //   });
-  // };
-
-  // const onLatestLoadMoreClick = (event) => {
-  //   event.preventDefault();
-  //   setLatestLoadMoreCount(latestLoadMoreCount + 1);
-  // };
-
-  // const onTrendingLoadMoreClick = (event) => {
-  //   event.preventDefault();
-  //   setTrendingLoadMoreCount(trendingLoadMoreCount + 1);
-  // };
-
-  // let route = null;
-
-  // const onTokenButtonClick = (event, tokenId) => {
-  //   route = (
-  //     <Switch>
-  //       <Route path="/token" render={() => <TokenPage />} />
-  //       <Redirect to="/token" />
-  //     </Switch>
-  //   );
-  //   return route
-  // }
-
+  //  Categories value initial state before filtering
   const [filters, setFilters] = React.useState({
     general: false,
     cryptocurrency: false,
@@ -210,11 +66,11 @@ const App = () => {
     sports: false,
   });
 
+  //  Function called on click of category selected from navbar
   const onClick = (event, filterName) => {
-    event.preventDefault()
-    // console.log(filterName)
-    // console.log({...filters, [filterName]: !filters[filterName]})
-    // alert("clicked category: " + filterName)
+    event.preventDefault();
+
+    //  Reversing the initial value of category selected from the navbar for filtering
     setFilters({
       general: false,
       cryptocurrency: false,
@@ -229,24 +85,18 @@ const App = () => {
       [filterName]: !filters[filterName],
     });
   };
-  // console.log(filters.general)
 
-  // const onClickCategoryFilter = (event) => {
-  //   event.preventDefault();
-  //   alert("clicked filtered category general");
-  // };
-
-  // const query = useQuery();
+  //  State/Variable to store the search value from the search bar
   const [searchValue, setSearchString] = React.useState("");
 
   const onClickSearch = (event) => {
     event.preventDefault();
-    setSearchString(event.target[0].value);
-    // console.log("coming in search")
-    // console.log(event.target[0].value)
-  };
-  // console.log(searchValue)
 
+    //  Storing the search bar value in code
+    setSearchString(event.target[0].value);
+  };
+
+  //  This  return statement basically contains the HTML portion
   return (
     <HashRouter>
       <div className="App">
@@ -288,17 +138,14 @@ const App = () => {
                     placeholder="Search"
                     aria-label="Search"
                   />
-                  <button
-                    className="btn my-2 my-sm-0"
-                    type="submit"
-                    // onClick={(event) => {onClickSearch(event)}}
-                  >
+                  <button className="btn my-2 my-sm-0" type="submit">
                     <img src="./assets/img/icon_search.svg" width="18" alt="" />
                   </button>
                 </form>
 
                 <div className="dropdown-divider"></div>
 
+                {/* Navbar Categories for Mobile/ipad devices */}
                 <ul className="navbar-nav ml-auto">
                   <li className="nav-item dropdown d-lg-none">
                     <a
@@ -320,7 +167,10 @@ const App = () => {
                       </i>
                     </a>
 
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="navbarDropdown"
+                    >
                       <FilterCategoryAnchor
                         isActive={filters.general}
                         onClick={onClick}
@@ -391,12 +241,12 @@ const App = () => {
                       >
                         Sports
                       </FilterCategoryAnchor>
-                      
                     </div>
                   </li>
 
                   <div className="dropdown-divider"></div>
 
+                  {/* Twitter icon html component */}
                   <li className="nav-item active">
                     <span className="social-links">
                       <a className="nav-link" href="/#">
@@ -408,6 +258,7 @@ const App = () => {
                       </a>
                     </span>
 
+                    {/* Discord icon html component */}
                     <span className="social-links pl-3">
                       <a className="nav-link" href="/#">
                         <img
@@ -422,6 +273,8 @@ const App = () => {
               </div>
             </div>
           </nav>
+
+          {/* Navbar Categories for Laptop devices */}
           <div className="container-fluid category-section d-none d-lg-block">
             <div className="container py-3">
               <div className="row Navbar__Items">
@@ -436,14 +289,6 @@ const App = () => {
                   Categories
                 </div>
                 <div className="col-auto ml-auto">
-                  {/* <button
-                    class="btn p-0 border-0"
-                    onClick={(event) => {
-                      onClickCategoryFilter(event);
-                    }}
-                  >
-                    General
-                  </button> */}
                   <FilterCategoryButton
                     isActive={filters.general}
                     onClick={onClick}
@@ -453,7 +298,6 @@ const App = () => {
                   </FilterCategoryButton>
                 </div>
                 <div className="col-auto">
-                  {/* <button className="btn p-0 border-0">Cryptocurrency</button> */}
                   <FilterCategoryButton
                     isActive={filters.cryptocurrency}
                     onClick={onClick}
@@ -463,7 +307,6 @@ const App = () => {
                   </FilterCategoryButton>
                 </div>
                 <div className="col-auto">
-                  {/* <button className="btn p-0 border-0">NFT</button> */}
                   <FilterCategoryButton
                     isActive={filters.nft}
                     onClick={onClick}
@@ -549,15 +392,17 @@ const App = () => {
 
         {/* <!-- MAIN SECTION --> */}
         <Switch>
-          <Route exact path="/token/:id" component={TokenPage}>
-            {/* <TokenPage></TokenPage> */}
-          </Route>
-          {/* <Route exact path="/owner/:address" component={OwnerPage}></Route> */}
+          {/* Redirting to Token Page on click on tokenId */}
+          <Route exact path="/token/:id" component={TokenPage}></Route>
+
+          {/* Redirecting to Owner's Page on click on Owner's Address */}
           <Route
             exact
             path="/owner/:address"
             render={(props) => <OwnerPage {...props}></OwnerPage>}
           ></Route>
+
+          {/* Route for Homepage */}
           <Route exact path="/">
             <Homepage
               filtersList={filters}
@@ -567,6 +412,7 @@ const App = () => {
             ></Homepage>
           </Route>
         </Switch>
+
         {/* <!-- Footer --> */}
         <footer>
           <div className="container py-5">
@@ -580,6 +426,7 @@ const App = () => {
   );
 };
 
+//  Component for Navbar Categories for Mobile/iPad/any non-laptop devices
 function FilterCategoryAnchor({ children, isActive, onClick, filterName }) {
   return (
     <a
@@ -594,11 +441,13 @@ function FilterCategoryAnchor({ children, isActive, onClick, filterName }) {
   );
 }
 
+//  Component for Navbar Categories for all kind of Laptop devices
 function FilterCategoryButton({ children, isActive, onClick, filterName }) {
   // console.log("printing category filter");
   // console.log(filterName)
   return (
-    <Button style={{textTransform: "none", fontSize: 16,}}
+    <Button
+      style={{ textTransform: "none", fontSize: 16 }}
       className="btn p-0 border-0"
       onClick={(event) => {
         onClick(event, filterName);
@@ -609,288 +458,234 @@ function FilterCategoryButton({ children, isActive, onClick, filterName }) {
   );
 }
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-//   paper: {
-//     height: 140,
-//     width: 100,
-//   },
-// }));
-
+//  Component for Owner's Page
 const OwnerPage = (props) => {
-  const location = useLocation();
-  console.log("line 564..");
-  console.log(location.state);
-  console.log("line 566..");
-  // const classes = useStyles();
-  // const address = window.location.pathname.replace("/owner/", "");
-  let owner, tokenList;
+  // const location = useLocation();
+
+  let owner, tokenList; //  Variables to store owner and owner's tokens list for owner's page
 
   if (props.location !== undefined) {
-    // if (props.location.state !== undefined) {
-    ({ owner, tokenList } = props.location.state);
-    // }
+    ({ owner, tokenList } = props.location.state); //  Assigning the value on click of Owner's Address
   }
-  // const [myOwner, setOwner] = React.useState(owner);
-  // const [myTokenList, setTokenList] = React.useState(tokenList);
 
-  // React.useEffect(() => {
-  //   const data = localStorage.getItem("myOwner");
-  //   if (data) {
-  //     setOwner(JSON.parse(data));
-  //   }
-  //   const tokenListData = localStorage.getItem("myTokenList");
-  //   if (tokenListData) {
-  //     setTokenList(JSON.parse(tokenListData));
-  //   }
-  // }, []);
-
-  // React.useEffect(() => {
-  //   localStorage.setItem("myOwner", JSON.stringify(owner));
-  //   localStorage.setItem("myTokenList", JSON.stringify(tokenList));
-  // });
-
-  console.log("print1: " + owner);
-  console.log("print2: " + tokenList);
-
-  let filteredLatestCategories = tokenList;
-  // console.log("print3: " + filteredLatestCategories)
-  // if (filteredLatestCategories !== undefined) {
+  let filteredLatestCategories = tokenList; //  Copy the token's list to another variable for immutability
   filteredLatestCategories = filteredLatestCategories.filter(
     (filteredLatestCategory) => {
-      // console.log("print4")
-      if (filteredLatestCategory.owner.toLowerCase().toString() === owner.toLowerCase().toString()) {
-        // console.log("print5")
+      if (
+        filteredLatestCategory.owner.toLowerCase().toString() ===
+        owner.toLowerCase().toString()
+      ) {
         return true;
       }
-      // console.log("print6")
+
       return false;
     }
   );
-  // }
-  console.log("print7");
-  console.log("print8: " + filteredLatestCategories);
 
+  //  Storing the count of token's to display on click of load more button
   const [latestLoadMoreCount, setLatestLoadMoreCount] = React.useState(1);
   const onLatestLoadMoreClick = (event) => {
     event.preventDefault();
-    console.log("print9");
+
     setLatestLoadMoreCount(latestLoadMoreCount + 1);
   };
-  console.log("print10");
-  console.log(latestLoadMoreCount);
 
-  return (
-    // <div>TODO: Implement owner's page for address: {address}</div>
-    true ? (
-      <div className="main mb-5">
-        <div className="container">
-          {/* <!-- Posts --> */}
-          <div className="raleway-semibold">User's Tokens</div>
-          <div className="row">
-            {/* <!-- Latest --> */}
-            {filteredLatestCategories.length > 0 &&
-              filteredLatestCategories.map((value, index) => {
-                if (index < latestLoadMoreCount * 5) {
-                  return index % 2 === 0 ? (
-                    <div className="col-12 pr-lg-5 col-lg-6" key={index}>
-                      {/* <div className="raleway-semibold">User's Tokens</div> */}
-                      <div className="row">
-                        <div className="col-12 my-3" key={index}>
-                          <div className="tweet-details">
-                            <div className="bg-black px-3 py-2">
-                              <div className="owner-id">
-                                {" "}
-                                <span className="title theme-text">
-                                  Owner:
-                                </span>{" "}
-                                <span className="p-id text-white">
-                                  {value.owner}
-                                </span>
-                              </div>
-                              <div className="row justify-content-between">
-                                <div className="col-auto token-id">
-                                  <Link
-                                    to={{
-                                      pathname: `/token/${value.id}`,
-                                      state: {
-                                        owner: value.owner,
-                                        content: value.content,
-                                        category: value.category,
-                                        likes: value.likes,
-                                        dislikes: value.dislikes,
-                                        tokenId: value.id,
-                                      },
-                                    }}
-                                  >
-                                    <span className="title theme-text">
-                                      Token ID:
-                                    </span>{" "}
-                                    <span className="p-id text-white">
-                                      {value.id}
-                                    </span>
-                                  </Link>
-                                </div>
-                                <div className="col-auto category">
+  // HTML part for Owner's Page
+  return true ? (
+    <div className="main mb-5">
+      <div className="container">
+        {/* <!-- Posts --> */}
+        <div className="raleway-semibold">User's Tokens</div>
+        <div className="row">
+          {/* <!-- Owner's Tokens List --> */}
+          {filteredLatestCategories.length > 0 &&
+            filteredLatestCategories.map((value, index) => {
+              if (index < latestLoadMoreCount * 5) {
+                return index % 2 === 0 ? (
+                  <div className="col-12 pr-lg-5 col-lg-6" key={index}>
+                    <div className="row">
+                      <div className="col-12 my-3" key={index}>
+                        <div className="tweet-details">
+                          <div className="bg-black px-3 py-2">
+                            <div className="owner-id">
+                              {" "}
+                              <span className="title theme-text">
+                                Owner:
+                              </span>{" "}
+                              <span className="p-id text-white">
+                                {value.owner}
+                              </span>
+                            </div>
+                            <div className="row justify-content-between">
+                              <div className="col-auto token-id">
+                                <Link
+                                  to={{
+                                    pathname: `/token/${value.id}`,
+                                    state: {
+                                      owner: value.owner,
+                                      content: value.content,
+                                      category: value.category,
+                                      likes: value.likes,
+                                      dislikes: value.dislikes,
+                                      tokenId: value.id,
+                                    },
+                                  }}
+                                >
                                   <span className="title theme-text">
-                                    Category:
+                                    Token ID:
                                   </span>{" "}
                                   <span className="p-id text-white">
-                                    {value.category}
+                                    {value.id}
                                   </span>
-                                </div>
+                                </Link>
                               </div>
-                            </div>
-                            <div className="bg-white px-3">
-                              <div className="desc pt-3 pb-2">
-                                {value.content}
-                              </div>
-
-                              <div className="text-right">
-                                <span className="like px-1">
-                                  <span className="count px-1">
-                                    Likes: {value.likes}
-                                  </span>
+                              <div className="col-auto category">
+                                <span className="title theme-text">
+                                  Category:
+                                </span>{" "}
+                                <span className="p-id text-white">
+                                  {value.category}
                                 </span>
-                                <span className="unLike px-1">
-                                  <span className="count px-1">
-                                    Dislikes: {value.dislikes}
-                                  </span>
-                                </span>
-                                <a
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
-                                >
-                                  {/* <span className="opensea pl-3">
-                                    {" "}
-                                    OpenSea Link
-                                  </span> */}
-                                  <span className="opensea pl-3">
-                                    <img
-                                      src="./assets/img/open-sea.svg"
-                                      alt="open_sea_img"
-                                    />
-                                  </span>
-                                </a>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="col-12 pl-lg-5 col-lg-6" key={index}>
-                      {/* <div className="raleway-semibold">User's Tokens</div> */}
-                      <div className="row">
-                        <div className="col-12 my-3" key={index}>
-                          <div className="tweet-details">
-                            <div className="bg-black px-3 py-2">
-                              <div className="owner-id">
-                                {" "}
-                                <span className="title theme-text">
-                                  Owner:
-                                </span>{" "}
-                                <span className="p-id text-white">
-                                  {value.owner}
-                                </span>
-                              </div>
-                              <div className="row justify-content-between">
-                                <div className="col-auto token-id">
-                                  <Link
-                                    to={{
-                                      pathname: `/token/${value.id}`,
-                                      state: {
-                                        owner: value.owner,
-                                        content: value.content,
-                                        category: value.category,
-                                        likes: value.likes,
-                                        dislikes: value.dislikes,
-                                        tokenId: value.id,
-                                      },
-                                    }}
-                                  >
-                                    <span className="title theme-text">
-                                      Token ID:
-                                    </span>{" "}
-                                    <span className="p-id text-white">
-                                      {value.id}
-                                    </span>
-                                  </Link>
-                                </div>
-                                <div className="col-auto category">
-                                  <span className="title theme-text">
-                                    Category:
-                                  </span>{" "}
-                                  <span className="p-id text-white">
-                                    {value.category}
-                                  </span>
-                                </div>
-                              </div>
+                          <div className="bg-white px-3">
+                            <div className="desc pt-3 pb-2">
+                              {value.content}
                             </div>
-                            <div className="bg-white px-3">
-                              <div className="desc pt-3 pb-2">
-                                {value.content}
-                              </div>
 
-                              <div className="text-right">
-                                <span className="like px-1">
-                                  <span className="count px-1">
-                                    Likes: {value.likes}
-                                  </span>
+                            <div className="text-right">
+                              <span className="like px-1">
+                                <span className="count px-1">
+                                  Likes: {value.likes}
                                 </span>
-                                <span className="unLike px-1">
-                                  <span className="count px-1">
-                                    Dislikes: {value.dislikes}
-                                  </span>
+                              </span>
+                              <span className="unLike px-1">
+                                <span className="count px-1">
+                                  Dislikes: {value.dislikes}
                                 </span>
-                                <a
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
-                                >
-                                  {/* <span className="opensea pl-3">
-                                    {" "}
-                                    OpenSea Link
-                                  </span> */}
+                              </span>
+                              <a
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                              >
+                                <span className="opensea pl-3">
                                   <img
                                     src="./assets/img/open-sea.svg"
                                     alt="open_sea_img"
                                   />
-                                </a>
-                              </div>
+                                </span>
+                              </a>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  );
-                }
-                return null
-              })}
+                  </div>
+                ) : (
+                  <div className="col-12 pl-lg-5 col-lg-6" key={index}>
+                    <div className="row">
+                      <div className="col-12 my-3" key={index}>
+                        <div className="tweet-details">
+                          <div className="bg-black px-3 py-2">
+                            <div className="owner-id">
+                              {" "}
+                              <span className="title theme-text">
+                                Owner:
+                              </span>{" "}
+                              <span className="p-id text-white">
+                                {value.owner}
+                              </span>
+                            </div>
+                            <div className="row justify-content-between">
+                              <div className="col-auto token-id">
+                                <Link
+                                  to={{
+                                    pathname: `/token/${value.id}`,
+                                    state: {
+                                      owner: value.owner,
+                                      content: value.content,
+                                      category: value.category,
+                                      likes: value.likes,
+                                      dislikes: value.dislikes,
+                                      tokenId: value.id,
+                                    },
+                                  }}
+                                >
+                                  <span className="title theme-text">
+                                    Token ID:
+                                  </span>{" "}
+                                  <span className="p-id text-white">
+                                    {value.id}
+                                  </span>
+                                </Link>
+                              </div>
+                              <div className="col-auto category">
+                                <span className="title theme-text">
+                                  Category:
+                                </span>{" "}
+                                <span className="p-id text-white">
+                                  {value.category}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="bg-white px-3">
+                            <div className="desc pt-3 pb-2">
+                              {value.content}
+                            </div>
 
-            <div className="col-12 text-center mt-5">
-              <button
-                className="btn text-white bg-black"
-                onClick={(event) => {
-                  onLatestLoadMoreClick(event);
-                }}
-              >
-                Load More
-              </button>
-            </div>
+                            <div className="text-right">
+                              <span className="like px-1">
+                                <span className="count px-1">
+                                  Likes: {value.likes}
+                                </span>
+                              </span>
+                              <span className="unLike px-1">
+                                <span className="count px-1">
+                                  Dislikes: {value.dislikes}
+                                </span>
+                              </span>
+                              <a
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                              >
+                                <img
+                                  src="./assets/img/open-sea.svg"
+                                  alt="open_sea_img"
+                                />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+              return null;
+            })}
+
+          <div className="col-12 text-center mt-5">
+            <button
+              className="btn text-white bg-black"
+              onClick={(event) => {
+                onLatestLoadMoreClick(event);
+              }}
+            >
+              Load More
+            </button>
           </div>
         </div>
       </div>
-    ) : null
-  );
+    </div>
+  ) : null;
 };
 
 const TokenPage = (props) => {
-  // const tokenId = window.location.pathname.replace("/token/", "");
-  let owner, category, likes, dislikes, content, tokenId;
+  let owner, category, likes, dislikes, content, tokenId; //  Variables to store the values for Token's Page to display
 
   //  remove this if condition to check the error
   if (props.location !== undefined) {
@@ -903,144 +698,61 @@ const TokenPage = (props) => {
       tokenId,
     } = props.location.state);
   }
-  // console.log(tokenId);
-  // console.log(category);
-  // console.log(owner);
-  // console.log(likes);
-  // console.log(dislikes);
-  // console.log(content)
 
+  //  Catching the error if no tokenId is passed on click of token Id
   if (!tokenId) {
     return <div>No Token Id passed.!</div>;
   }
-  return (
-    // <div>TODO: Token info here: token id = {tokenId}</div>
-    true ? (
-      <div className="main mb-5">
-        <div className="container">
-          {/* <!-- Posts --> */}
-          <div
-            className="row"
-            // style={{
-            //   marginLeft: "200px",
-            //   marginRight: "-200px",
-            // }}
-          >
-            {/* <!-- Latest --> */}
-            <div
-              className="col-12 pl-lg-5 col-lg-6"
-              style={{
-                margin: "auto",
-              }}
-            >
-              <div className="raleway-semibold">User's Token Info</div>
-              <div className="row">
-                <div className="col-12 my-3">
-                  <div className="tweet-details">
-                    <div className="bg-black px-3 py-2">
-                      <div className="owner-id">
-                        {" "}
-                        <span className="title theme-text">
-                          Token Details
-                        </span>{" "}
-                        {/* <span className="p-id text-white">
-                                  {value.owner}
-                                </span> */}
-                      </div>
-                      {/* <div className="row justify-content-between">
-                                <div className="col-auto token-id">
-                                  <Link
-                                    to={{
-                                      pathname: `/token/${value.id}`,
-                                      state: {
-                                        owner: value.owner,
-                                        content: value.content,
-                                        category: value.category,
-                                        likes: value.likes,
-                                        dislikes: value.dislikes,
-                                      },
-                                    }}
-                                  >
-                                    <span className="title theme-text">
-                                      Token ID:
-                                    </span>{" "}
-                                    <span className="p-id text-white">
-                                      {value.id}
-                                    </span>
-                                  </Link>
-                                </div>
-                                <div className="col-auto category">
-                                  <span className="title theme-text">
-                                    Category:
-                                  </span>{" "}
-                                  <span className="p-id text-white">
-                                    {value.category}
-                                  </span>
-                                </div>
-                              </div> */}
-                    </div>
-                    <div className="bg-white px-3">
-                      <div className="desc pt-3 pb-2">Owner: {owner}</div>
-                      <div className="desc pt-3 pb-2">Token Id: {tokenId}</div>
-                      <div className="desc pt-3 pb-2">Content: {content}</div>
-                      <div className="desc pt-3 pb-2">Likes: {likes}</div>
-                      <div className="desc pt-3 pb-2">Dislikes: {dislikes}</div>
-                      {false && <div className="desc pt-3 pb-2">Category: {category}</div>}
 
-                      <div className="text-right">
-                        {/* <span className="like px-1">
-                          <span className="count px-1">Likes: {likes}</span>
-                        </span>
-                        <span className="unLike px-1">
-                          <span className="count px-1">
-                            Dislikes: {dislikes}
-                          </span>
-                        </span> */}
-                        {/* <a
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
-                                >
-                                  <span className="opensea pl-3">
-                                    {" "}
-                                    OpenSea Link
-                                  </span>
-                                </a> */}
-                      </div>
+  //  HTML portion for Token's Page
+  return true ? (
+    <div className="main mb-5">
+      <div className="container">
+        {/* <!-- Posts --> */}
+        <div className="row">
+          {/* <!-- Token's Page Content --> */}
+          <div
+            className="col-12 pl-lg-5 col-lg-6"
+            style={{
+              margin: "auto",
+            }}
+          >
+            <div className="raleway-semibold">User's Token Info</div>
+            <div className="row">
+              <div className="col-12 my-3">
+                <div className="tweet-details">
+                  <div className="bg-black px-3 py-2">
+                    <div className="owner-id">
+                      {" "}
+                      <span className="title theme-text">
+                        Token Details
+                      </span>{" "}
                     </div>
                   </div>
+                  <div className="bg-white px-3">
+                    <div className="desc pt-3 pb-2">Owner: {owner}</div>
+                    <div className="desc pt-3 pb-2">Token Id: {tokenId}</div>
+                    <div className="desc pt-3 pb-2">Content: {content}</div>
+                    <div className="desc pt-3 pb-2">Likes: {likes}</div>
+                    <div className="desc pt-3 pb-2">Dislikes: {dislikes}</div>
+                    {false && (
+                      <div className="desc pt-3 pb-2">Category: {category}</div>
+                    )}
+
+                    <div className="text-right"></div>
+                  </div>
                 </div>
-
-                {/* {filteredLatestCategories.length > 0 &&
-                  filteredLatestCategories.map((value, index) => {
-                    if (index < latestLoadMoreCount * 5) {
-                      return (
-                        );
-                    }
-                  })} */}
-
-                {/* <div className="col-12 text-center mt-5">
-                  <button
-                    className="btn text-white bg-black"
-                    onClick={(event) => {
-                      onLatestLoadMoreClick(event);
-                    }}
-                  >
-                    Load More
-                  </button>
-                </div> */}
               </div>
             </div>
           </div>
         </div>
       </div>
-    ) : null
-  );
+    </div>
+  ) : null;
 };
 
 function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
-  // console.log(filtersList)
-  // console.log("Search Value: " + searchValue)
+  // States/Variable to store the values of allTweets, TrendingTweets, LatestTweets, tweetMsg, TweetCategory, LoadMoreButtonClickCount for Latest/trending Tweets
   const [allTweets, setAllTweets] = React.useState([]);
   const [trendingTweets, setTrendingTweets] = React.useState([]);
   const [tweetMsg, setTweetMsg] = React.useState("");
@@ -1048,16 +760,16 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
   const [tokenId, setTokenId] = React.useState("");
   const [latestLoadMoreCount, setLatestLoadMoreCount] = React.useState(1);
   const [trendingLoadMoreCount, setTrendingLoadMoreCount] = React.useState(1);
-  // let [filteredLatestCategories, setFilteredLatestCategories] = React.useState([])
 
-  let filteredLatestCategories = allTweets;
+  let filteredLatestCategories = allTweets; //  Copying the allTweets fetched from smart contract to local array list for immutability
+  //  Filtering the latest tweets list on the category selected from navbar
   filteredLatestCategories = filteredLatestCategories.filter(
     (filteredLatestCategory) => {
+      //  If conditions are for negative scenarios.. eg: if category == general and list != general then return false
       if (
         filtersList.general &&
         !filteredLatestCategory.category.toLowerCase().includes("general")
       ) {
-        // filtersList = {...filtersList, general: !filtersList.general}
         return false;
       }
       if (
@@ -1066,7 +778,6 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
           .toLowerCase()
           .includes("cryptocurrency")
       ) {
-        // filtersList = {...filtersList, cryptocurrency: !filtersList.cryptocurrency}
         return false;
       }
       if (
@@ -1136,10 +847,12 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
     }
   );
 
-  let filteredTrendingCategories = trendingTweets;
+  let filteredTrendingCategories = trendingTweets; //  Copying the trending tweets list to local variable for immutability
 
+  //  Filtering the trending tokens list on the basis of category selected from the navbar
   filteredTrendingCategories = filteredTrendingCategories.filter(
     (filteredTrendingCategory) => {
+      //  If conditions are for negative scenarios.. eg: if category == general and list != general then return false
       if (
         filtersList.general &&
         !filteredTrendingCategory.category.toLowerCase().includes("general")
@@ -1152,7 +865,6 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
           .toLowerCase()
           .includes("cryptocurrency")
       ) {
-        // filtersList = {...filtersList, cryptocurrency: !filtersList.cryptocurrency}
         return false;
       }
       if (
@@ -1219,72 +931,33 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
       }
 
       return true;
-      // console.log(category.category.toLowerCase().includes("general"))
     }
   );
 
-  // const [filters, setFilters] = React.useState({
-  //   general: false,
-  //   cryptocurrency: false,
-  //   nft: false,
-  //   arts: false,
-  //   games: false,
-  //   science: false,
-  //   technology: false,
-  //   politics: false,
-  //   society: false,
-  //   sports: false,
-  // });
-
-  // const onClickGeneral = () => {
-  //   setFilters({
-  //     ...filters,
-  //     general: !filters.general,
-  //   });
-  // };
-
+  //  React Hook for getting the list of all tweets from the smart contract
   React.useEffect(() => {
-    let mounted = true  //  For cancelling all the promises calls after getting work done
+    let mounted = true; //  For cancelling all the promises calls after getting work done
     getAllTweets().then((result) => {
-      // console.log(result.reverse())
-      // console.log("printing1.. ");
-      // console.log("result: " + result);
       if (mounted) {
-      let receivedResult = result;
-      if (receivedResult.length > 0) {
-        // console.log("printing2...");
-        // console.log("received result: " + receivedResult);
+        let receivedResult = result;
+        if (receivedResult.length > 0) {
+          //  Setting the list of latest tweets based on the tweet published
+          setAllTweets([...receivedResult].reverse());
 
-        setAllTweets([...receivedResult].reverse());
-
-        // console.log("printign3...");
-        // console.log("all tweets: " + allTweets);
-
-        //  Setting the list of trending tweets based on the number of likes
-        setTrendingTweets(
-          [...allTweets].sort(function (a, b) {
-            return parseInt(b[3]) - parseInt(a[3]);
-          })
-        );
-        // console.log("printing4...");
-        // console.log("trending tweets: " + trendingTweets);
-        // console.log(allTweets.sort("likes"))
-        // console.log(allTweets);
+          //  Setting the list of trending tweets based on the number of likes
+          setTrendingTweets(
+            [...allTweets].sort(function (a, b) {
+              return parseInt(b[3]) - parseInt(a[3]);
+            })
+          );
+        }
       }
-      // console.log("printing5...");
-    }
     });
 
-    return  () => mounted = false;
-
+    return () => (mounted = false);
   }, [allTweets, trendingTweets]);
 
-  // if (allTweets.length > 0) {
-
-  //   console.log("printing: ", allTweets[11].id);
-  // }
-
-  // Set Tweet Message
+  // Function to Set Tweet Message
   const onChangeTweetMsg = (event) => {
     event.preventDefault();
     if (event.target.value != null) {
@@ -1292,7 +965,7 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
     }
   };
 
-  // Set Tweet Message Category
+  // Function Set Tweet Message Category
   const onSelectCategory = (event) => {
     event.preventDefault();
     if (event.target.value != null) {
@@ -1301,75 +974,61 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
     }
   };
 
+  //  Function to publish the tweet on blockchain
   const onPublishClick = async (event) => {
     event.preventDefault();
-    console.log("ffef: ", tweetMsgCategory);
-    // console.log(tokenContractInstance.options.from)
 
     if (
       tweetMsg !== "" &&
       tweetMsgCategory !== "" &&
       tweetMsgCategory !== "Choose..."
     ) {
+      // Publishing the tweet via smart contract on blockchain
       await publishTweet(
         tweetMsg.toString(),
         tweetMsgCategory.toString(),
         feesToCreate.toString()
       ).then((res) => {
-        // console.log("app.js function printing.....")
-        // console.log(res)
+        //  Fetching the tweet published token's id from smart contract to store
         setTokenId(res.toString());
         if (!tokenId) {
-          console.log(tokenId)
+          console.log(tokenId);
         }
       });
-
-      // console.log(id)
-      // alert("Tweet message entered: " + tweetMsg + " with category: " + tweetMsgCategory);
     }
   };
-  // console.log("txn. done.. Token Id: " , tokenId)
+
+  // Function to like the tweet
   const onLikeClick = async (event, tokenId) => {
     event.preventDefault();
-    console.log("clicked like button");
-    console.log(tokenId);
+
     await likeTweet(Number(tokenId), feesToLike.toString()).then((result) => {
-      console.log("app.js function printing");
       console.log(result);
     });
   };
 
+  //  Function to dislike the tweet
   const onDislikeClick = async (event, tokenId) => {
     event.preventDefault();
-    console.log("clicked like button");
-    console.log(tokenId);
+
     await dislikeTweet(Number(tokenId)).then((result) => {
-      console.log("app.js function printing");
       console.log(result);
     });
   };
 
+  //  Function to handle load more button click for latest tweets section
   const onLatestLoadMoreClick = (event) => {
     event.preventDefault();
     setLatestLoadMoreCount(latestLoadMoreCount + 1);
   };
 
+  //  Function to handle load more button click for trending tweets section
   const onTrendingLoadMoreClick = (event) => {
     event.preventDefault();
     setTrendingLoadMoreCount(trendingLoadMoreCount + 1);
   };
 
-  // let route = null;
-
-  // const onTokenButtonClick = (event, tokenId) => {
-  //   route = (
-  //     <Switch>
-  //       <Route path="/token" render={() => <TokenPage />} />
-  //       <Redirect to="/token" />
-  //     </Switch>
-  //   );
-  //   return route;
-  // };
+  //  HTML portion for HOMEPAGE
   return (
     <div className="main mb-5">
       <div className="container">
@@ -1397,19 +1056,8 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                     onSelectCategory(event);
                   }}
                 >
-                  {/* <option selected>Choose...</option>
-                  <option>General</option>
-                  <option>Cryptocurrency</option>
-                  <option>NFT</option>
-                  <option>Arts</option>
-                  <option>Games</option>
-                  <option>Science</option>
-                  <option>Technology</option>
-                  <option>Politics</option>
-                  <option>Society</option>
-                  <option>Sports</option> */}
                   <option defaultValue>Choose...</option>
-                  <option >General</option>
+                  <option>General</option>
                   <option>Cryptocurrency</option>
                   <option>NFT</option>
                   <option>Arts</option>
@@ -1543,8 +1191,6 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                                 rel="noopener noreferrer"
                                 href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
                               >
-                                {/*https://opensea.io/assets/0x30cb06ec313f8d4acc618195389f442727aaf1d6/12 */}
-
                                 <span className="opensea pl-3">
                                   <img
                                     src="./assets/img/open-sea.svg"
@@ -1558,174 +1204,9 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                       </div>
                     );
                   }
-                  return null
-                }
-                )}
-              {/* <div class="col-12 my-3">
-                  <div class="tweet-details">
-                    <div class="bg-black px-3 py-2">
-                      <div class="owner-id">
-                        {" "}
-                        <span class="title theme-text">Owner:</span>{" "}
-                        <span class="p-id text-white">
-                          0x012387128040918201209398213012
-                        </span>
-                      </div>
-                      <div class="row justify-content-between">
-                        <div class="col-auto token-id">
-                          <span class="title theme-text">Token ID:</span>{" "}
-                          <span class="p-id text-white">15AB8F007</span>
-                        </div>
-                        <div class="col-auto category">
-                          <span class="title theme-text">Token ID:</span>{" "}
-                          <span class="p-id text-white">15AB8F007</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="bg-white px-3">
-                      <div class="desc pt-3 pb-2">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                        sed diam nonumy eirmod tempor invidunt ut labore et
-                        dolore magna aliquyam erat, sed diam voluptua. At vero
-                        eos et accusam et justo
-                      </div>
+                  return null;
+                })}
 
-                      <div class="text-right">
-                        <span class="like px-1">
-                          <button class="btn border-0">
-                            <img src="./assets/img/like.png" alt="like_img" />
-                          </button>
-                          <span class="count px-1">18</span>
-                        </span>
-                        <span class="unLike px-1">
-                          <button class="btn border-0">
-                            <img
-                              src="./assets//img/unlike.png"
-                              alt="unlike_img"
-                            />
-                          </button>
-                          <span class="count px-1">2</span>
-                        </span>
-                        <span class="opensea pl-3">
-                          <img
-                            src="./assets/img/open-sea.svg"
-                            alt="open_sea_img"
-                          />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 my-3">
-                  <div class="tweet-details">
-                    <div class="bg-black px-3 py-2">
-                      <div class="owner-id">
-                        {" "}
-                        <span class="title theme-text">Owner:</span>{" "}
-                        <span class="p-id text-white">
-                          0x012387128040918201209398213012
-                        </span>
-                      </div>
-                      <div class="row justify-content-between">
-                        <div class="col-auto token-id">
-                          <span class="title theme-text">Token ID:</span>{" "}
-                          <span class="p-id text-white">15AB8F007</span>
-                        </div>
-                        <div class="col-auto category">
-                          <span class="title theme-text">Token ID:</span>{" "}
-                          <span class="p-id text-white">15AB8F007</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="bg-white px-3">
-                      <div class="desc pt-3 pb-2">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                        sed diam nonumy eirmod tempor invidunt ut labore et
-                        dolore magna aliquyam erat, sed diam voluptua. At vero
-                        eos et accusam et justo
-                      </div>
-
-                      <div class="text-right">
-                        <span class="like px-1">
-                          <button class="btn border-0">
-                            <img src="./assets/img/like.png" alt="like_img" />
-                          </button>
-                          <span class="count px-1">18</span>
-                        </span>
-                        <span class="unLike px-1">
-                          <button class="btn border-0">
-                            <img
-                              src="./assets//img/unlike.png"
-                              alt="unlike_img"
-                            />
-                          </button>
-                          <span class="count px-1">2</span>
-                        </span>
-                        <span class="opensea pl-3">
-                          <img
-                            src="./assets/img/open-sea.svg"
-                            alt="open_sea_img"
-                          />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 my-3">
-                  <div class="tweet-details">
-                    <div class="bg-black px-3 py-2">
-                      <div class="owner-id">
-                        {" "}
-                        <span class="title theme-text">Owner:</span>{" "}
-                        <span class="p-id text-white">
-                          0x012387128040918201209398213012
-                        </span>
-                      </div>
-                      <div class="row justify-content-between">
-                        <div class="col-auto token-id">
-                          <span class="title theme-text">Token ID:</span>{" "}
-                          <span class="p-id text-white">15AB8F007</span>
-                        </div>
-                        <div class="col-auto category">
-                          <span class="title theme-text">Token ID:</span>{" "}
-                          <span class="p-id text-white">15AB8F007</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="bg-white px-3">
-                      <div class="desc pt-3 pb-2">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                        sed diam nonumy eirmod tempor invidunt ut labore et
-                        dolore magna aliquyam erat, sed diam voluptua. At vero
-                        eos et accusam et justo
-                      </div>
-
-                      <div class="text-right">
-                        <span class="like px-1">
-                          <button class="btn border-0">
-                            <img src="./assets/img/like.png" alt="like_img" />
-                          </button>
-                          <span class="count px-1">18</span>
-                        </span>
-                        <span class="unLike px-1">
-                          <button class="btn border-0">
-                            <img
-                              src="./assets//img/unlike.png"
-                              alt="unlike_img"
-                            />
-                          </button>
-                          <span class="count px-1">2</span>
-                        </span>
-                        <span class="opensea pl-3">
-                          <img
-                            src="./assets/img/open-sea.svg"
-                            alt="open_sea_img"
-                          />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
               <div className="col-12 text-center my-5">
                 <button
                   className="btn text-white bg-black"
@@ -1744,8 +1225,6 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
             <div className="row">
               {filteredLatestCategories.length > 0 &&
                 filteredLatestCategories.map((value, index) => {
-                  // console.log(index)
-                  // console.log(value.id)
                   if (index < latestLoadMoreCount * 5) {
                     return (
                       <div className="col-12 my-3" key={index}>
@@ -1770,18 +1249,6 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                             </div>
                             <div className="row justify-content-between">
                               <div className="col-auto token-id">
-                                {/* <a
-                                    target="_blank"
-                                    href={`#/token/${value.id}.html`}
-                                  > */}
-
-                                {/* <button
-                                  className="btn border-0"
-                                  onClick={(event) => {
-                                    onTokenButtonClick(event, value.id);
-                                  }}
-                                > */}
-
                                 <Link
                                   to={{
                                     pathname: `/token/${value.id}`,
@@ -1802,10 +1269,6 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                                     {value.id}
                                   </span>
                                 </Link>
-
-                                {/* </button> */}
-
-                                {/* </a> */}
                               </div>
                               <div className="col-auto category">
                                 <span className="title theme-text">
@@ -1862,7 +1325,6 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                                 rel="noopener noreferrer"
                                 href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
                               >
-                                {/*https://opensea.io/assets/0x30cb06ec313f8d4acc618195389f442727aaf1d6/12 */}
                                 <span className="opensea pl-3">
                                   <img
                                     src="./assets/img/open-sea.svg"
@@ -1876,7 +1338,7 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                       </div>
                     );
                   }
-                  return null
+                  return null;
                 })}
 
               <div className="col-12 text-center mt-5">
