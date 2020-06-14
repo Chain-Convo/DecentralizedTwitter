@@ -762,7 +762,7 @@ const OwnerPage = (props) => {
                                 <a
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                                  href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
                                 >
                                   {/* <span className="opensea pl-3">
                                     {" "}
@@ -849,7 +849,7 @@ const OwnerPage = (props) => {
                                 <a
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                                  href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
                                 >
                                   {/* <span className="opensea pl-3">
                                     {" "}
@@ -999,7 +999,7 @@ const TokenPage = (props) => {
                         {/* <a
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                                  href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
                                 >
                                   <span className="opensea pl-3">
                                     {" "}
@@ -1541,9 +1541,9 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                               <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                                href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
                               >
-                                {/* https://rinkeby.opensea.io/assets/0x30cb06ec313f8d4acc618195389f442727aaf1d6/12 */}
+                                {/*https://opensea.io/assets/0x30cb06ec313f8d4acc618195389f442727aaf1d6/12 */}
 
                                 <span className="opensea pl-3">
                                   <img
@@ -1860,9 +1860,9 @@ function Homepage({ filtersList, searchValue, feesToCreate, feesToLike }) {
                               <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href={`https://rinkeby.opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
+                                href={`https://opensea.io/assets/${tokenContractInstance.options.address}/${value.id}`}
                               >
-                                {/* https://rinkeby.opensea.io/assets/0x30cb06ec313f8d4acc618195389f442727aaf1d6/12 */}
+                                {/*https://opensea.io/assets/0x30cb06ec313f8d4acc618195389f442727aaf1d6/12 */}
                                 <span className="opensea pl-3">
                                   <img
                                     src="./assets/img/open-sea.svg"
