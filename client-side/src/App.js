@@ -424,7 +424,7 @@ const App = () => {
           </nav>
           <div className="container-fluid category-section d-none d-lg-block">
             <div className="container py-3">
-              <div className="row">
+              <div className="row Navbar__Items">
                 <div className="col-auto font-weight-bold">
                   <i className="d-inline-block">
                     <img
@@ -598,7 +598,7 @@ function FilterCategoryButton({ children, isActive, onClick, filterName }) {
   // console.log("printing category filter");
   // console.log(filterName)
   return (
-    <Button
+    <Button style={{textTransform: "none", fontSize: 16,}}
       className="btn p-0 border-0"
       onClick={(event) => {
         onClick(event, filterName);

@@ -37,6 +37,12 @@ body {
   }
 }
 
+@media only screen and (min-width: 1024.1px) {
+  .Navbar__Items {
+    flex-wrap: nowrap;
+  }
+}
+
 header .dropdown-toggle::after {
   display: none;
 }
